@@ -1,0 +1,108 @@
+scalar DateTime
+
+# Types
+type User {
+    id: ID!
+    email: String!
+    username: String!
+    firstName: String!
+    lastName: String!
+    avartar: String
+    # Roles
+    role: Role!
+    # Timestamps
+    createdAt: DateTime!
+    updatedAt: DateTime!
+    lastLogin: DateTime!
+    # Additional fields
+    enabled: Boolean!
+    emailVerified: Boolean!
+    accountNonExpired: Boolean!
+    accountNonLocked: Boolean!
+    credentialsNonExpired: Boolean!
+}
+
+type AuthPayload {
+    accessToken: String!
+    refreshToken: String
+    user: User!
+}
+
+# Enums
+enum Role {
+    USER
+    MANAGER
+    ADMIN
+}
+
+type Query {
+    # User queries
+    me: User
+
+    # Manager/Admin queries
+    users: [User!]!
+    user(id: ID!): User
+
+    # Test queries
+    publicTest: TestResponse!
+    userTest: TestResponse!
+    managerTest: TestResponse!
+    adminTest: TestResponse!
+}
+
+type Mutation {
+    # User mutations
+    register(input: RegisterInput!): AuthPayload!
+    login(input: LoginInput!): AuthPayload!
+    refreshToken(refreshToken: String!): AuthPayload!
+
+    # User profile management
+    updateProfile(input: UpdateProfileInput!): User!
+    deleteProfile: Boolean!
+
+    # Admin operations
+    updateUser(id: ID!, input: UpdateUserInput!): User!
+    deleteUser(id: ID!): Boolean!
+    updateUserRole(id: ID!, role: Role!): User!
+    enableUser(id: ID!): User!
+    disableUser(id: ID!): User!
+}
+
+input RegisterInput {
+    firstName: String!
+    lastName: String!
+    email: String!
+    username: String!
+    password: String!
+}
+
+input UpdateProfileInput {
+    firstName: String
+    lastName: String
+    email: String
+    username: String
+    avatar: String
+    password: String
+}
+
+input LoginInput {
+    username: String!
+    password: String!
+}
+
+input UpdateUserInput {
+    firstName: String
+    lastName: String
+    email: String
+    username: String
+    avatar: String
+    role: Role
+    enabled: Boolean
+}
+
+type TestResponse {
+    message: String!
+    status: String!
+    role: String
+    allowedRoles: Boolean!
+}
