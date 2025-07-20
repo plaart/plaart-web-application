@@ -1,8 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { useEffect, useState } from "react";
 import IntlContext from "../../context/intl/IntlContext";
-import Translations from "../../shared/locales/index";
-import { LANGUAGES } from "../../shared/locales/index";
+import Translations, { LANGUAGES } from "../../shared/locales";
 
 type IntlProps = {
   children: React.ReactNode;
@@ -13,20 +12,12 @@ const IntlProvider = ({ children }: IntlProps) => {
   const [messages, setMessages] = useState(Translations[LANGUAGES.en]);
 
   useEffect(() => {
-    const loadTranslations = async () => {
-      try {
-        const newMessages = await import(
-          `../../locales/shared/${locale}/common.json`
-        );
-        setMessages(newMessages.default || newMessages);
-      } catch (error) {
-        console.error(
-          `Error loading translations for locale ${locale}:`,
-          error
-        );
-      }
-    };
-    loadTranslations();
+    const selectedMessages = Translations[locale as keyof typeof Translations];
+    if (selectedMessages) {
+      setMessages(selectedMessages);
+    } else {
+      console.warn(`Translations for locale "${locale}" not found`);
+    }
   }, [locale]);
 
   const t = (key: string, values?: Record<string, any>) => {
@@ -41,7 +32,6 @@ const IntlProvider = ({ children }: IntlProps) => {
       if (result === undefined) return key;
     }
 
-    // Interpolación de valores
     if (values && typeof result === "string") {
       Object.keys(values).forEach((key) => {
         result = result.replace(new RegExp(`{${key}}`, "g"), values[key]);
