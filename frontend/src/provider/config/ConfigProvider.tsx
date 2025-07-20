@@ -3,7 +3,7 @@ import type { ConfigContextType } from "../../context/config/ConfigContext";
 import ConfigContext from "../../context/config/ConfigContext";
 
 const defaultConfig: ConfigContextType = {
-  apiUrl: process.env.REACT_APP_API_URL || "http://localhost:3001",
+  apiUrl: import.meta.env.VITE_API_URL || "http://localhost:3001",
   appName: "Mi Aplicación",
   version: "1.0.0",
   environment:
