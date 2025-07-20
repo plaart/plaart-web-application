@@ -1,7 +1,7 @@
-import { endpoints } from "../api/endpoints";
-import { httpClient } from "../api/httpConfig";
-import type { UpdateUserRequest } from "../types/auth/UpdateUserRequest";
-import type { User } from "../types/user/User";
+import { endpoints } from "../../api/endpoints";
+import { httpClient } from "../../api/httpConfig";
+import type { UpdateUserRequest } from "../../types/auth/UpdateUserRequest";
+import type { User } from "../../types/user/User";
 
 export const adminService = {
   getAllUsers(): Promise<User[]> {
@@ -14,32 +14,32 @@ export const adminService = {
 
   updateUser(userId: string, data: UpdateUserRequest): Promise<User> {
     return httpClient.request(endpoints.admin.userById(userId), {
-      method: 'PUT',
+      method: "PUT",
       body: JSON.stringify(data),
     });
   },
 
   deleteUser(userId: string): Promise<void> {
     return httpClient.request(endpoints.admin.userById(userId), {
-      method: 'DELETE',
+      method: "DELETE",
     });
   },
 
   updateUserRole(userId: string, role: string): Promise<User> {
     return httpClient.request(endpoints.admin.updateRole(userId, role), {
-      method: 'PUT',
+      method: "PUT",
     });
   },
 
   enableUser(userId: string): Promise<User> {
     return httpClient.request(endpoints.admin.enable(userId), {
-      method: 'PUT',
+      method: "PUT",
     });
   },
 
   disableUser(userId: string): Promise<User> {
     return httpClient.request(endpoints.admin.disable(userId), {
-      method: 'PUT',
+      method: "PUT",
     });
   },
 };

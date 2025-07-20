@@ -1,10 +1,10 @@
 import { jwtDecode } from "jwt-decode";
-import { endpoints } from "../api/endpoints";
-import { httpClient } from "../api/httpConfig";
-import type { AuthResponse } from "../types/auth/AuthResponse";
-import type { LoginRequest } from "../types/auth/LoginRequest";
-import type { RegisterRequest } from "../types/auth/RegisterRequest";
-import type { JWTPayload } from "../types/auth/JWTPayload";
+import { endpoints } from "../../api/endpoints";
+import { httpClient } from "../../api/httpConfig";
+import type { AuthResponse } from "../../types/auth/AuthResponse";
+import type { LoginRequest } from "../../types/auth/LoginRequest";
+import type { RegisterRequest } from "../../types/auth/RegisterRequest";
+import type { JWTPayload } from "../../types/auth/JWTPayload";
 
 export const authService = {
   register(data: RegisterRequest): Promise<AuthResponse> {

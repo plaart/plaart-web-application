@@ -5,7 +5,7 @@ import AuthContext, {
 } from "../../context/auth/AuthContext";
 import type { User } from "../../types/user/User";
 
-import { apiService } from "../../services";
+import { apiService } from "../../services/api";
 import type { LoginRequest } from "../../types/auth/LoginRequest";
 import type { RegisterRequest } from "../../types/auth/RegisterRequest";
 import type { ApiError } from "../../types/api/ApiError";
