@@ -9,6 +9,7 @@ import { LoggerService } from "./services/log/LoggerService";
 import IntlProvider from "./provider/intl/IntlProvider";
 import AppRouter from "./modules";
 import NotificationToaster from "./notification";
+import ComponentEventsProvider from "./provider/event/ComponentEventsProvider";
 
 const App = () => {
   const createLogger = (): Logger => new LoggerService();
@@ -18,12 +19,14 @@ const App = () => {
       {() => (
         <ApplicationRoot>
           <LogProvider logger={createLogger()}>
-            <AuthProvider>
-              <IntlProvider>
-                <AppRouter />
-                <NotificationToaster />
-              </IntlProvider>
-            </AuthProvider>
+            <ComponentEventsProvider>
+              <AuthProvider>
+                <IntlProvider>
+                  <AppRouter />
+                  <NotificationToaster />
+                </IntlProvider>
+              </AuthProvider>
+            </ComponentEventsProvider>
           </LogProvider>
         </ApplicationRoot>
       )}
