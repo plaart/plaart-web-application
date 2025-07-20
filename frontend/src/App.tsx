@@ -6,6 +6,9 @@ import { AuthProvider } from "./provider/auth/AuthProvider";
 import { LogProvider } from "./provider/log/LogProvider";
 import type { Logger } from "./types/log/Logger";
 import { LoggerService } from "./services/log/LoggerService";
+import IntlProvider from "./provider/intl/IntlProvider";
+import AppRouter from "./modules";
+import NotificationToaster from "./notification";
 
 const App = () => {
   const createLogger = (): Logger => new LoggerService();
@@ -15,7 +18,12 @@ const App = () => {
       {() => (
         <ApplicationRoot>
           <LogProvider logger={createLogger()}>
-            <AuthProvider></AuthProvider>
+            <AuthProvider>
+              <IntlProvider>
+                <AppRouter />
+                <NotificationToaster />
+              </IntlProvider>
+            </AuthProvider>
           </LogProvider>
         </ApplicationRoot>
       )}
