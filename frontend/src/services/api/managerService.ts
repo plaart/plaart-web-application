@@ -1,6 +1,6 @@
-import { endpoints } from "../api/endpoints";
-import { httpClient } from "../api/httpConfig";
-import type { User } from "../types/user/User";
+import { endpoints } from "../../api/endpoints";
+import { httpClient } from "../../api/httpConfig";
+import type { User } from "../../types/user/User";
 
 export const managerService = {
   getAllUsers(): Promise<User[]> {

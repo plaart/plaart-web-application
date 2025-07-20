@@ -1,6 +1,6 @@
-import { endpoints } from "../api/endpoints";
-import { httpClient } from "../api/httpConfig";
-import type { TestResponse } from "../types/api/TestResponse";
+import { endpoints } from "../../api/endpoints";
+import { httpClient } from "../../api/httpConfig";
+import type { TestResponse } from "../../types/api/TestResponse";
 
 export const testService = {
   testPublic(): Promise<TestResponse> {

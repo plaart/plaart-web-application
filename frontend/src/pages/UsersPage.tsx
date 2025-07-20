@@ -10,7 +10,7 @@ import {
   RiFilterLine,
 } from "@remixicon/react";
 import { useAuth } from "../hooks/useAuth";
-import { apiService } from "../services/index";
+import { apiService } from "../services/api/index";
 import toast from "react-hot-toast";
 import type { User } from "../types/user/User";
 import type { ApiError } from "../types/api/ApiError";

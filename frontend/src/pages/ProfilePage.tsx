@@ -10,7 +10,7 @@ import {
 
 import { useAuth } from "../hooks/useAuth";
 import toast from "react-hot-toast";
-import { apiService } from "../services/index";
+import { apiService } from "../services/api/index";
 import type { UpdateUserRequest } from "../types/auth/UpdateUserRequest";
 import type { ApiError } from "../types/api/ApiError";
 
