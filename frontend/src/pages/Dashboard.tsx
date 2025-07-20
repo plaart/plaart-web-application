@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { motion } from "framer-motion";
 import { useAuth } from "../hooks/useAuth";
-import { apiService } from "../services";
+import { apiService } from "../services/api";
 
 interface TestResult {
   message: string;

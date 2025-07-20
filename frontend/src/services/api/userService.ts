@@ -1,7 +1,7 @@
-import { endpoints } from "../api/endpoints";
-import { httpClient } from "../api/httpConfig";
-import type { UpdateUserRequest } from "../types/auth/UpdateUserRequest";
-import type { User } from "../types/user/User";
+import { endpoints } from "../../api/endpoints";
+import { httpClient } from "../../api/httpConfig";
+import type { UpdateUserRequest } from "../../types/auth/UpdateUserRequest";
+import type { User } from "../../types/user/User";
 
 export const userService = {
   getProfile(): Promise<User> {
@@ -9,13 +9,13 @@ export const userService = {
   },
   updateProfile(data: UpdateUserRequest): Promise<User> {
     return httpClient.request(endpoints.user.profile, {
-      method: 'PUT',
+      method: "PUT",
       body: JSON.stringify(data),
     });
   },
   deleteProfile(): Promise<void> {
     return httpClient.request(endpoints.user.profile, {
-      method: 'DELETE',
+      method: "DELETE",
     });
   },
 };
