@@ -1,0 +1,118 @@
+{
+  "home": {},
+  "workspace": {},
+  "editor": {
+    "toolbar": {
+      "control": {
+        "shortcuts": { "tooltip": "Shortcuts" },
+        "awards": { "tooltip": "Awards and Achievements" },
+        "help": { "tooltip": "Help and Support" },
+        "setting": { "tooltip": "Settings" }
+      },
+      "actions": {
+        "save": { "tooltip": "Save" },
+        "load": { "tooltip": "Load" },
+        "clear": { "tooltip": "Clear" },
+        "preview": { "tooltip": "Preview" },
+        "logout": { "tooltip": "Log Out" }
+      },
+      "sections": {
+        "create": {
+          "title": "Create",
+          "describe": { "text": "Describe" },
+          "options": {
+            "render": { "button": "Render" },
+            "refine": { "button": "Refine" }
+          },
+          "prompt": {
+            "title": "Prompt",
+            "placeholder": "Enter your prompt here..."
+          },
+          "style": {
+            "title": "Style",
+            "options": {
+              "render": { "content": "Render content goes here" },
+              "refine": { "content": "Refine content goes here" },
+              "none": { "text": "Select an option" }
+            }
+          },
+          "influence": { "text": "Influence" },
+          "images": {
+            "title": "Images",
+            "numbers": {
+              "one": { "button": "1" },
+              "four": { "button": "4" }
+            }
+          },
+          "generate": { "button": "Generate" }
+        },
+        "colorPalette": { "title": "Color Palette", "subtitle": "Palettes" },
+        "layers": {
+          "title": "Layers",
+          "button": { "add": { "tooltip": "New Layer" } },
+          "visibility": {
+            "state": {
+              "visible": { "tooltip": "Visible" },
+              "hidden": { "tooltip": "Hidden" }
+            }
+          },
+          "default": { "text": "Layer {numLayer}" },
+          "menu": {
+            "manage": {
+              "copyImage": { "text": "Copy Image" },
+              "rename": { "text": "Rename" },
+              "duplicate": { "text": "Duplicate" }
+            },
+            "arrange": {
+              "top": { "text": "Move to Top" },
+              "bottom": { "text": "Move to Bottom" }
+            },
+            "actions": {
+              "delete": { "text": "Delete" },
+              "export": { "text": "Export" }
+            }
+          }
+        },
+        "materials": {
+          "title": "Materials",
+          "subtitle": {
+            "library": { "text": "Library" },
+            "render": { "text": "Render" }
+          }
+        },
+        "imgProc": {
+          "title": "Image Processing",
+          "effects": {
+            "brightness": { "text": "Brightness" },
+            "saturation": { "text": "Saturation" },
+            "contrast": { "text": "Contrast" }
+          }
+        }
+      },
+      "header": {
+        "screen": {
+          "full": { "tooltip": "Full Screen" },
+          "fit": { "tooltip": "Fit to Screen" }
+        },
+        "zoom": {
+          "in": { "tooltip": "Zoom In" },
+          "out": { "tooltip": "Zoom Out" }
+        },
+        "actions": {
+          "move": { "tooltip": "Move" },
+          "insert": { "tooltip": "Insert" },
+          "insertText": { "text": "Insert" },
+          "close": { "tooltip": "Close" }
+        }
+      }
+    },
+    "history": {
+      "undo": { "tooltip": "Undo" },
+      "redo": { "tooltip": "Redo" }
+    },
+    "commons": {
+      "cancel": { "button": "Cancel" },
+      "accept": { "button": "Accept" }
+    }
+  }
+}

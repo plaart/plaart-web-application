@@ -1,0 +1,118 @@
+{
+  "home": {},
+  "workspace": {},
+  "editor": {
+    "toolbar": {
+      "control": {
+        "shortcuts": { "tooltip": "Atajos" },
+        "awards": { "tooltip": "Premios y Logros" },
+        "help": { "tooltip": "Ayuda y Soporte" },
+        "setting": { "tooltip": "Configuración" }
+      },
+      "actions": {
+        "save": { "tooltip": "Guardar" },
+        "load": { "tooltip": "Cargar" },
+        "clear": { "tooltip": "Limpiar" },
+        "preview": { "tooltip": "Previsualizar" },
+        "logout": { "tooltip": "Log Out" }
+      },
+      "sections": {
+        "create": {
+          "title": "Crear",
+          "describe": { "text": "Describir" },
+          "options": {
+            "render": { "button": "Renderizar" },
+            "refine": { "button": "Refinar" }
+          },
+          "prompt": {
+            "title": "Instrucción",
+            "placeholder": "Ingresa tu instrucción aquí..."
+          },
+          "style": {
+            "title": "Estilo",
+            "options": {
+              "render": { "content": "Contenido de render aquí" },
+              "refine": { "content": "Contenido de refinado aquí" },
+              "none": { "text": "Select an option" }
+            }
+          },
+          "influence": { "text": "Influencia" },
+          "images": {
+            "title": "Imágenes",
+            "numbers": {
+              "one": { "button": "1" },
+              "four": { "button": "4" }
+            }
+          },
+          "generate": { "button": "Generar" }
+        },
+        "colorPalette": { "title": "Paleta de Colores", "subtitle": "Paletas" },
+        "layers": {
+          "title": "Capas",
+          "button": { "add": { "tooltip": "Nueva Capa" } },
+          "visibility": {
+            "state": {
+              "visible": { "tooltip": "Visible" },
+              "hidden": { "tooltip": "Oculto" }
+            }
+          },
+          "default": { "text": "Capa {numLayer}" },
+          "menu": {
+            "manage": {
+              "copyImage": { "text": "Copiar Imagen" },
+              "rename": { "text": "Renombrar" },
+              "duplicate": { "text": "Duplicar" }
+            },
+            "arrange": {
+              "top": { "text": "Mover al Principio" },
+              "bottom": { "text": "Mover al Final" }
+            },
+            "actions": {
+              "delete": { "text": "Eliminar" },
+              "export": { "text": "Exportar" }
+            }
+          }
+        },
+        "materials": {
+          "title": "Materiales",
+          "subtitle": {
+            "library": { "text": "Biblioteca" },
+            "render": { "text": "Renderizado" }
+          }
+        },
+        "imgProc": {
+          "title": "Procesamiento de Imágenes",
+          "effects": {
+            "brightness": { "text": "Brillo" },
+            "saturation": { "text": "Saturación" },
+            "contrast": { "text": "Contraste" }
+          }
+        }
+      },
+      "header": {
+        "screen": {
+          "full": { "tooltip": "Pantalla Completa" },
+          "fit": { "tooltip": "Ajustar a Pantalla" }
+        },
+        "zoom": {
+          "in": { "tooltip": "Acercar" },
+          "out": { "tooltip": "Alejar" }
+        },
+        "actions": {
+          "move": { "tooltip": "Mover" },
+          "insert": { "tooltip": "Insertar" },
+          "insertText": { "text": "Insertar" },
+          "close": { "tooltip": "Cerrar" }
+        }
+      }
+    },
+    "history": {
+      "undo": { "tooltip": "Deshacer" },
+      "redo": { "tooltip": "Rehacer" }
+    },
+    "commons": {
+      "cancel": { "button": "Cancelar" },
+      "accept": { "button": "Aceptar" }
+    }
+  }
+}
