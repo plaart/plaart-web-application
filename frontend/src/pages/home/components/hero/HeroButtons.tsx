@@ -21,7 +21,7 @@ export const HeroButtons = () => {
         Get started
       </motion.button>
       <motion.button
-        className="text-gray-600 px-8 py-3 text-lg font-medium hover:text-black transition-colors duration-200 border border-gray-300 rounded-lg hover:border-gray-400"
+        className="text-white px-8 py-3 text-lg font-medium hover:text-gray-400 transition-colors duration-200 border border-gray-300 rounded-lg hover:border-gray-400"
         whileHover={{ scale: 1.05 }}>
         Watch Docs
       </motion.button>
