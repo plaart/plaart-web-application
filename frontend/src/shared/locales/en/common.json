@@ -1,5 +1,93 @@
 {
+  "common": {
+    "brand": {
+      "name": "plaart"
+    }
+  },
   "home": {},
+  "auth": {
+    "navbar": {
+      "noAccount": "Don't have an account?",
+      "hasAccount": "Already have an account?",
+      "createAccount": "Create one",
+      "signIn": "Sign in"
+    },
+    "login": {
+      "title": "Welcome",
+      "subtitle": "We're happy to see you. Please sign in below.",
+      "fields": {
+        "username": {
+          "label": "Username:",
+          "placeholder": "Enter your username"
+        },
+        "password": {
+          "label": "Password:",
+          "placeholder": "Enter your password"
+        }
+      },
+      "submit": "Continue",
+      "loading": "Signing in...",
+      "links": {
+        "register": "Don't have an account? Sign up here"
+      }
+    },
+    "register": {
+      "title": "Get started",
+      "subtitle": "You don't have an account yet. Please continue to create it now.",
+      "fields": {
+        "firstName": {
+          "label": "First Name:",
+          "placeholder": "John"
+        },
+        "lastName": {
+          "label": "Last Name:",
+          "placeholder": "Doe"
+        },
+        "email": {
+          "label": "Email:",
+          "placeholder": "your@email.com"
+        },
+        "username": {
+          "label": "Username:",
+          "placeholder": "username123"
+        },
+        "password": {
+          "label": "Password:",
+          "placeholder": "••••••••"
+        },
+        "confirmPassword": {
+          "label": "Confirm Password:",
+          "placeholder": "••••••••"
+        }
+      },
+      "submit": "Create account",
+      "loading": "Creating account...",
+      "links": {
+        "login": "Already have an account? Sign in here"
+      },
+      "validation": {
+        "firstName": "First name is required",
+        "lastName": "Last name is required",
+        "email": {
+          "required": "Email is required",
+          "invalid": "Invalid email"
+        },
+        "username": {
+          "required": "Username is required",
+          "minLength": "Must be at least 3 characters",
+          "maxLength": "Cannot be more than 20 characters"
+        },
+        "password": {
+          "required": "Password is required",
+          "minLength": "Must be at least 6 characters"
+        },
+        "confirmPassword": {
+          "required": "Please confirm your password",
+          "mismatch": "Passwords do not match"
+        }
+      }
+    }
+  },
   "workspace": {},
   "editor": {
     "toolbar": {

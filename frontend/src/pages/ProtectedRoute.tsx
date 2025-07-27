@@ -2,6 +2,7 @@ import React from "react";
 import { Navigate, useLocation } from "react-router-dom";
 import { motion } from "framer-motion";
 import { useAuth } from "../hooks/useAuth";
+import { useLogger } from "../hooks/useLogger";
 
 interface ProtectedRouteProps {
   children: React.ReactNode;
@@ -40,20 +41,59 @@ export const ProtectedRoute: React.FC<ProtectedRouteProps> = ({
 }) => {
   const { user, loading, isAuthenticated } = useAuth();
   const location = useLocation();
+  const logger = useLogger();
+
+  // Log inicial con información de la ruta y estado de autenticación
+  logger.debug("ProtectedRoute accessed", {
+    pathname: location.pathname,
+    userRole: user?.role || "none",
+    requiredRole: requiredRole || "none",
+    loading: loading.toString(),
+    isAuthenticated: isAuthenticated.toString(),
+    component: "ProtectedRoute",
+  });
 
   if (loading) {
+    logger.info("Authentication verification in progress", {
+      pathname: location.pathname,
+      component: "ProtectedRoute",
+    });
     return <LoadingSpinner />;
   }
 
   if (!isAuthenticated) {
-    return <Navigate to="/login" state={{ from: location }} replace />;
+    logger.warn("Access denied - user not authenticated", {
+      pathname: location.pathname,
+      redirectTo: "/",
+      component: "ProtectedRoute",
+    });
+    return <Navigate to="/" state={{ from: location }} replace />;
   }
 
   if (requiredRole && user) {
     const userRoleLevel = roleHierarchy[user.role];
     const requiredRoleLevel = roleHierarchy[requiredRole];
 
+    logger.debug("Role verification process", {
+      userRole: user.role,
+      userRoleLevel: userRoleLevel.toString(),
+      requiredRole,
+      requiredRoleLevel: requiredRoleLevel.toString(),
+      pathname: location.pathname,
+      component: "ProtectedRoute",
+    });
+
     if (userRoleLevel < requiredRoleLevel) {
+      logger.error("Access denied - insufficient role level", {
+        userRole: user.role,
+        userRoleLevel: userRoleLevel.toString(),
+        requiredRole,
+        requiredRoleLevel: requiredRoleLevel.toString(),
+        pathname: location.pathname,
+        userId: user.id?.toString() || "unknown",
+        component: "ProtectedRoute",
+      });
+
       return (
         <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-red-500 to-pink-600">
           <motion.div
@@ -86,16 +126,48 @@ export const ProtectedRoute: React.FC<ProtectedRouteProps> = ({
               <br />
               Tu rol actual: <span className="font-semibold">{user.role}</span>
             </p>
-            <button
-              onClick={() => window.history.back()}
-              className="btn btn-primary">
-              Volver
-            </button>
+            <div className="space-y-2">
+              <button
+                onClick={() => {
+                  logger.info("User clicked go back button", {
+                    userRole: user.role,
+                    pathname: location.pathname,
+                    component: "ProtectedRoute",
+                  });
+                  window.history.back();
+                }}
+                className="w-full px-4 py-2 bg-gray-500 hover:bg-gray-600 text-white rounded-lg">
+                Volver
+              </button>
+              <button
+                onClick={() => {
+                  const targetPath =
+                    user.role === "ADMIN" ? "/dashboard" : "/workspace";
+                  logger.info("User redirected to their area", {
+                    userRole: user.role,
+                    targetPath,
+                    currentPath: location.pathname,
+                    component: "ProtectedRoute",
+                  });
+                  window.location.href = targetPath;
+                }}
+                className="w-full px-4 py-2 bg-blue-500 hover:bg-blue-600 text-white rounded-lg">
+                Ir a mi área
+              </button>
+            </div>
           </motion.div>
         </div>
       );
     }
   }
+
+  logger.info("Access granted - rendering protected content", {
+    userRole: user?.role || "unknown",
+    requiredRole: requiredRole || "none",
+    pathname: location.pathname,
+    userId: user?.id?.toString() || "unknown",
+    component: "ProtectedRoute",
+  });
 
   return <>{children}</>;
 };

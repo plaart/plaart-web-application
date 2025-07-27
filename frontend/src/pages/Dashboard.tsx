@@ -11,7 +11,7 @@ interface TestResult {
 }
 
 const DashboardPage: React.FC = () => {
-  const { user } = useAuth();
+  const { user, logout } = useAuth();
   const [testResults, setTestResults] = useState<{
     public?: TestResult;
     user?: TestResult;
@@ -37,24 +37,6 @@ const DashboardPage: React.FC = () => {
       }
 
       if (user) {
-        try {
-          // Test para usuarios autenticados
-          if (["USER", "MANAGER", "ADMIN"].includes(user.role)) {
-            results.user = await apiService.test.testUser();
-          }
-        } catch (error) {
-          console.error("User test failed:", error);
-        }
-
-        try {
-          // Test para managers y admins
-          if (["MANAGER", "ADMIN"].includes(user.role)) {
-            results.manager = await apiService.test.testManager();
-          }
-        } catch (error) {
-          console.error("Manager test failed:", error);
-        }
-
         try {
           // Test solo para admins
           if (user.role === "ADMIN") {
@@ -140,8 +122,31 @@ const DashboardPage: React.FC = () => {
           initial="hidden"
           animate="visible"
           className="space-y-8">
-          {/* Header */}
-          <motion.div variants={itemVariants} className="text-center">
+          {/* Header con botón de logout */}
+          <motion.div variants={itemVariants} className="text-center relative">
+            {/* Botón de logout en la esquina superior derecha */}
+            <div className="absolute top-0 right-0">
+              <motion.button
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
+                onClick={logout}
+                className="flex items-center space-x-2 px-4 py-2 bg-red-500 hover:bg-red-600 text-white rounded-lg shadow-md transition-colors">
+                <svg
+                  className="w-5 h-5"
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24">
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={2}
+                    d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"
+                  />
+                </svg>
+                <span className="font-medium">Cerrar Sesión</span>
+              </motion.button>
+            </div>
+
             <div
               className={`w-32 h-32 bg-gradient-to-r ${getRoleColor(
                 user?.role || ""

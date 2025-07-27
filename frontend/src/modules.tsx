@@ -1,51 +1,76 @@
-import {
-  BrowserRouter as Router,
-  Navigate,
-  Route,
-  Routes,
-} from "react-router-dom";
-import LoginPage from "./pages/LoginPage";
-import RegisterPage from "./pages/RegisterPage";
+
+import { Route, Routes, Navigate } from "react-router-dom";
+import HomePage from "./pages/home";
+import AuthPages from "./pages/auth";
 import { ProtectedRoute } from "./pages/ProtectedRoute";
 import Layout from "./pages/Layout";
 import DashboardPage from "./pages/Dashboard";
 import ProfilePage from "./pages/ProfilePage";
 import UsersPage from "./pages/UsersPage";
+import WorkspacePage from "./pages/workspace";
 
-const AppRouter = () => {
+const AppRoutes = () => {
+  console.log("AppRoutes renderizado");
+
   return (
-    <Router>
-      <Routes>
-        {/* Public Routes */}
-        <Route path="/login" element={<LoginPage />} />
-        <Route path="/register" element={<RegisterPage />} />
+    <Routes>
+      {/* Ruta principal - Landing Page (pública) */}
+      <Route path="/" element={<HomePage />} />
 
-        {/* Protected Routes */}
-        <Route
-          path="/"
-          element={
-            <ProtectedRoute>
-              <Layout />
-            </ProtectedRoute>
-          }>
-          <Route index element={<Navigate to="/dashboard" replace />} />
-          <Route path="dashboard" element={<DashboardPage />} />
-          <Route path="profile" element={<ProfilePage />} />
-          <Route
-            path="users"
-            element={
-              <ProtectedRoute requiredRole="MANAGER">
-                <UsersPage />
-              </ProtectedRoute>
-            }
-          />
-        </Route>
+      {/* Rutas de autenticación (públicas) */}
+      <Route path="/auth/login" element={<AuthPages />} />
+      <Route path="/auth/register" element={<AuthPages />} />
 
-        {/* Catch all route */}
-        <Route path="*" element={<Navigate to="/dashboard" replace />} />
-      </Routes>
-    </Router>
+      {/* Dashboard - Solo para ADMIN */}
+      <Route
+        path="/dashboard"
+        element={
+          <ProtectedRoute requiredRole="ADMIN">
+            <Layout>
+              <DashboardPage />
+            </Layout>
+          </ProtectedRoute>
+        }
+      />
+
+      {/* Workspace - Para USER y MANAGER */}
+      <Route
+        path="/workspace"
+        element={
+          <ProtectedRoute>
+            <Layout>
+              <WorkspacePage />
+            </Layout>
+          </ProtectedRoute>
+        }
+      />
+
+      <Route
+        path="/profile"
+        element={
+          <ProtectedRoute>
+            <Layout>
+              <ProfilePage />
+            </Layout>
+          </ProtectedRoute>
+        }
+      />
+
+      <Route
+        path="/users"
+        element={
+          <ProtectedRoute requiredRole="MANAGER">
+            <Layout>
+              <UsersPage />
+            </Layout>
+          </ProtectedRoute>
+        }
+      />
+
+      {/* Catch all route */}
+      <Route path="*" element={<Navigate to="/" replace />} />
+    </Routes>
   );
 };
 
-export default AppRouter;
+export default AppRoutes;

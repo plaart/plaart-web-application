@@ -10,6 +10,7 @@ import type { LoginRequest } from "../../types/auth/LoginRequest";
 import type { RegisterRequest } from "../../types/auth/RegisterRequest";
 import type { ApiError } from "../../types/api/ApiError";
 import toast from "react-hot-toast";
+import { useNavigate } from "react-router-dom";
 
 interface AuthProviderProps {
   children: ReactNode;
@@ -18,6 +19,31 @@ interface AuthProviderProps {
 export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
   const [user, setUser] = useState<User | null>(null);
   const [loading, setLoading] = useState(true);
+  const navigate = useNavigate();
+
+  // Función para redirigir según el rol
+  const redirectByRole = (userRole: string) => {
+    console.log("Redirigiendo usuario con rol:", userRole);
+    
+    switch (userRole) {
+      case "ADMIN":
+        console.log("Redirigiendo ADMIN a /dashboard");
+        navigate("/dashboard");
+        break;
+      case "MANAGER":
+        console.log("Redirigiendo MANAGER a /workspace");
+        navigate("/workspace");
+        break;
+      case "USER":
+        console.log("Redirigiendo USER a /workspace");
+        navigate("/workspace");
+        break;
+      default:
+        console.log("Rol no reconocido, redirigiendo a homepage");
+        navigate("/");
+        break;
+    }
+  };
 
   const refreshToken = async (): Promise<void> => {
     const refreshTokenValue = apiService.auth.getRefreshToken();
@@ -39,6 +65,7 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
     try {
       const userData = await apiService.user.getProfile();
       setUser(userData);
+      return userData;
     } catch (error) {
       console.error("Error fetching user profile:", error);
       logout();
@@ -52,8 +79,18 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
       localStorage.setItem("accessToken", response.accessToken);
       localStorage.setItem("refreshToken", response.refreshToken);
 
-      await fetchUserProfile();
+      // Obtener los datos del usuario
+      const userData = await apiService.user.getProfile();
+      setUser(userData);
+      
       toast.success("¡Inicio de sesión exitoso!");
+      
+      console.log("Usuario logueado:", userData);
+      console.log("Rol del usuario:", userData.role);
+      
+      // Redirigir según el rol del usuario
+      redirectByRole(userData.role);
+      
     } catch (error) {
       const apiError = error as ApiError;
       console.error("Login error:", apiError);
@@ -69,8 +106,14 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
       localStorage.setItem("accessToken", response.accessToken);
       localStorage.setItem("refreshToken", response.refreshToken);
 
-      await fetchUserProfile();
+      const userData = await apiService.user.getProfile();
+      setUser(userData);
+      
       toast.success("¡Registro exitoso!");
+      
+      // Redirigir según el rol del usuario después del registro
+      redirectByRole(userData.role);
+      
     } catch (error) {
       const apiError = error as ApiError;
       console.error("Register error:", apiError);
@@ -83,6 +126,7 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
     apiService.auth.clearTokens();
     setUser(null);
     toast.success("Sesión cerrada correctamente");
+    navigate("/");
   };
 
   const refetchUser = async (): Promise<void> => {
@@ -99,10 +143,28 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
         return;
       }
 
-      if (apiService.auth.isTokenExpired(token)) {
-        await refreshToken();
-      } else {
-        await fetchUserProfile();
+      try {
+        let userData;
+        if (apiService.auth.isTokenExpired(token)) {
+          await refreshToken();
+        } else {
+          userData = await fetchUserProfile();
+        }
+
+        // Solo redirigir si estamos en la homepage y hay un usuario
+        const currentPath = window.location.pathname;
+        console.log("Ruta actual:", currentPath);
+        console.log("Usuario en inicialización:", userData || user);
+        
+        if (currentPath === "/" && (userData || user)) {
+          const userToRedirect = userData || user;
+          if (userToRedirect) {
+            console.log("Redirigiendo desde homepage con usuario:", userToRedirect.role);
+            redirectByRole(userToRedirect.role);
+          }
+        }
+      } catch (error) {
+        console.error("Error initializing auth:", error);
       }
 
       setLoading(false);
