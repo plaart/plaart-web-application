@@ -1,9 +1,11 @@
-import React from "react";
+import HeroSection from "./components/hero/HeroSection";
+import { Navbar } from "./components/navbar";
 
 const HomePage = () => {
   return (
-    <div>
-      <p>HomePage</p>
+    <div className="min-h-screen">
+      <Navbar />
+      <HeroSection />
     </div>
   );
 };
