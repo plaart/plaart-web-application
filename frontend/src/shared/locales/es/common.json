@@ -1,5 +1,93 @@
 {
+  "common": {
+    "brand": {
+      "name": "plaart"
+    }
+  },
   "home": {},
+  "auth": {
+    "navbar": {
+      "noAccount": "¿No tienes una cuenta?",
+      "hasAccount": "¿Ya tienes una cuenta?",
+      "createAccount": "Crear una",
+      "signIn": "Iniciar sesión"
+    },
+    "login": {
+      "title": "Bienvenido",
+      "subtitle": "Nos alegra verte. Por favor inicia sesión.",
+      "fields": {
+        "username": {
+          "label": "Usuario:",
+          "placeholder": "Ingresa tu usuario"
+        },
+        "password": {
+          "label": "Contraseña:",
+          "placeholder": "Ingresa tu contraseña"
+        }
+      },
+      "submit": "Continuar",
+      "loading": "Iniciando sesión...",
+      "links": {
+        "register": "¿No tienes cuenta? Regístrate aquí"
+      }
+    },
+    "register": {
+      "title": "Comenzar",
+      "subtitle": "Aún no tienes cuenta. Continúa para crearla ahora.",
+      "fields": {
+        "firstName": {
+          "label": "Nombre:",
+          "placeholder": "Juan"
+        },
+        "lastName": {
+          "label": "Apellido:",
+          "placeholder": "Pérez"
+        },
+        "email": {
+          "label": "Email:",
+          "placeholder": "tu@email.com"
+        },
+        "username": {
+          "label": "Usuario:",
+          "placeholder": "usuario123"
+        },
+        "password": {
+          "label": "Contraseña:",
+          "placeholder": "••••••••"
+        },
+        "confirmPassword": {
+          "label": "Confirmar contraseña:",
+          "placeholder": "••••••••"
+        }
+      },
+      "submit": "Crear cuenta",
+      "loading": "Creando cuenta...",
+      "links": {
+        "login": "¿Ya tienes cuenta? Inicia sesión aquí"
+      },
+      "validation": {
+        "firstName": "El nombre es requerido",
+        "lastName": "El apellido es requerido",
+        "email": {
+          "required": "El email es requerido",
+          "invalid": "Email inválido"
+        },
+        "username": {
+          "required": "El nombre de usuario es requerido",
+          "minLength": "Debe tener al menos 3 caracteres",
+          "maxLength": "No puede tener más de 20 caracteres"
+        },
+        "password": {
+          "required": "La contraseña es requerida",
+          "minLength": "Debe tener al menos 6 caracteres"
+        },
+        "confirmPassword": {
+          "required": "Confirma tu contraseña",
+          "mismatch": "Las contraseñas no coinciden"
+        }
+      }
+    }
+  },
   "workspace": {},
   "editor": {
     "toolbar": {
