@@ -1,7 +1,7 @@
 import React from "react";
 import { Outlet } from "react-router-dom";
 import { Toaster } from "react-hot-toast";
-import Navbar from "../components/Navbar";
+// import Navbar from "../components/Navbar";
 
 interface LayoutProps {
   children?: React.ReactNode;
@@ -10,7 +10,7 @@ interface LayoutProps {
 const Layout: React.FC<LayoutProps> = ({ children }) => {
   return (
     <div className="min-h-screen bg-gray-50">
-      <Navbar />
+      {/* <Navbar /> */}
       <main>
         {/* Si hay children, úsalos, si no, usa Outlet para rutas anidadas */}
         {children || <Outlet />}
