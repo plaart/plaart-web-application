@@ -1,6 +1,4 @@
-import "./App.css";
 import { ApplicationRoot } from "./components/ApplicationRoot";
-
 import ConfigProvider from "./provider/config/ConfigProvider";
 import { AuthProvider } from "./provider/auth/AuthProvider";
 import { LogProvider } from "./provider/log/LogProvider";
