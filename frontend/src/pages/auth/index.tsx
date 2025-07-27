@@ -1,25 +1,28 @@
-import { useState } from "react";
+import { useLocation } from "react-router-dom";
 import { AuthNavbar } from "./components/AuthNavbar";
 import { LoginForm } from "./components/LoginForm";
 import { RegisterForm } from "./components/RegisterForm";
 import { AnimatedBackground } from "./components/AnimatedBackground";
+import { LanguageSwitcher } from "../../components/LanguageSwitcher";
 
-// Componente principal que maneja el estado
+// Componente principal que funciona con URLs
 const AuthPages = () => {
-  const [currentPage, setCurrentPage] = useState("login");
+  const location = useLocation();
 
-  const togglePage = () => {
-    setCurrentPage(currentPage === "login" ? "register" : "login");
-  };
+  // Determinar la página actual basándose en la URL
+  const currentPage = location.pathname.includes("/register")
+    ? "register"
+    : "login";
 
   return (
     <div className="min-h-screen bg-white">
-      <AuthNavbar onTogglePage={togglePage} currentPage={currentPage} />
+      {/* Navbar en modo automático */}
+      <AuthNavbar />
 
       <div className="flex">
-        {/* Lado izquierdo - Formulario */}
-        <div className="w-full lg:w-1/2 flex items-center justify-center p-8 ">
+        <div className="w-full lg:w-1/2 flex items-center justify-center p-8">
           <div className="w-full max-w-md">
+            <LanguageSwitcher />
             {currentPage === "login" ? <LoginForm /> : <RegisterForm />}
           </div>
         </div>
