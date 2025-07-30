@@ -4,34 +4,9 @@ import {
   RiFolderLine,
   RiSettingsLine,
   RiLogoutBoxLine,
-  RiAddLine,
   RiUserLine,
   RiFlashlightLine,
 } from "@remixicon/react";
-
-// Mock data
-const mockFiles = [
-  {
-    id: 1,
-    name: "Palettes Basics",
-    type: "file",
-    thumbnail: "VIZCOM\nPALETTES",
-    edited: "13 days ago",
-    createdBy: "Sixtus Nosike",
-    location: "My files",
-  },
-  {
-    id: 2,
-    name: "Untitled",
-    type: "file",
-    thumbnail: "character-design",
-    edited: "5 months ago",
-    createdBy: "Sixtus Nosike",
-    location: "My files",
-  },
-];
-
-const mockFolders = [{ id: 1, name: "Designer Style 2D", fileCount: 0 }];
 
 // Sidebar component with TypeScript-style props
 export const Sidebar = ({ currentPage, onPageChange, onLogout, user }) => {
@@ -80,22 +55,6 @@ export const Sidebar = ({ currentPage, onPageChange, onLogout, user }) => {
               </motion.button>
             );
           })}
-        </div>
-
-        {/* Teams Section */}
-        <div className="mt-8">
-          <div className="flex items-center justify-between mb-2">
-            <h3 className="text-xs font-medium text-gray-400 uppercase">
-              Teams
-            </h3>
-            <button className="text-gray-400 hover:text-white">
-              <RiAddLine size={16} />
-            </button>
-          </div>
-          <div className="flex items-center space-x-2 px-3 py-2 text-sm text-gray-300">
-            <div className="w-4 h-4 bg-green-500 rounded"></div>
-            <span>All Sixtus Nosike's Wor...</span>
-          </div>
         </div>
       </nav>
 
