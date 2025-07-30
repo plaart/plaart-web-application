@@ -1,9 +1,7 @@
-
 import { Route, Routes, Navigate } from "react-router-dom";
 import HomePage from "./pages/home";
 import AuthPages from "./pages/auth";
 import { ProtectedRoute } from "./pages/ProtectedRoute";
-import Layout from "./pages/Layout";
 import DashboardPage from "./pages/Dashboard";
 import ProfilePage from "./pages/ProfilePage";
 import UsersPage from "./pages/UsersPage";
@@ -26,9 +24,7 @@ const AppRoutes = () => {
         path="/dashboard"
         element={
           <ProtectedRoute requiredRole="ADMIN">
-            <Layout>
-              <DashboardPage />
-            </Layout>
+            <DashboardPage />
           </ProtectedRoute>
         }
       />
@@ -38,9 +34,7 @@ const AppRoutes = () => {
         path="/workspace"
         element={
           <ProtectedRoute>
-            <Layout>
-              <WorkspacePage />
-            </Layout>
+            <WorkspacePage />
           </ProtectedRoute>
         }
       />
@@ -49,9 +43,7 @@ const AppRoutes = () => {
         path="/profile"
         element={
           <ProtectedRoute>
-            <Layout>
-              <ProfilePage />
-            </Layout>
+            <ProfilePage />
           </ProtectedRoute>
         }
       />
@@ -60,9 +52,7 @@ const AppRoutes = () => {
         path="/users"
         element={
           <ProtectedRoute requiredRole="MANAGER">
-            <Layout>
-              <UsersPage />
-            </Layout>
+            <UsersPage />
           </ProtectedRoute>
         }
       />
