@@ -4,7 +4,40 @@
       "name": "plaart"
     }
   },
-  "home": {},
+  "home": {
+    "hero": {
+      "buttons": {
+        "btnStart": "Get started",
+        "btnDocs": "Watch Docs"
+      },
+      "header": {
+        "data": {
+          "title": "AI Drawing Assistant",
+          "mainText": "Draw with ",
+          "subtitle": "Learn, experiment, and explore the endless possibilities of creative\ncollaboration. Transform your artistic journey with intelligent drawing\nassistance that grows with you.",
+          "detail": "AI"
+        }
+      },
+      "content": {
+        "buttons": {
+          "btnGeneration": "Listening to your most artistic side..."
+        },
+        "canvas": {
+          "data": {
+            "title": "Start drawing with AI guidance",
+            "subtitle": "Sketch, learn, and explore together"
+          }
+        },
+        "learning": {
+          "indicator1": "Learning...",
+          "indicator2": "Adapting...",
+          "indicator3": "Improving...",
+          "indicator4": "Sketch...",
+          "indicator5": "Rendering..."
+        }
+      }
+    }
+  },
   "auth": {
     "navbar": {
       "noAccount": "Don't have an account?",
