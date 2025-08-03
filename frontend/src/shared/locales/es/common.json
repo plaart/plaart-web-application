@@ -4,7 +4,40 @@
       "name": "plaart"
     }
   },
-  "home": {},
+  "home": {
+    "hero": {
+      "buttons": {
+        "btnStart": "Comenzar",
+        "btnDocs": "Ver Documentación"
+      },
+      "header": {
+        "data": {
+          "title": "Asistente de Dibujo con IA",
+          "mainText": "Dibuja con ",
+          "subtitle": "Aprende, experimenta y explora las infinitas posibilidades de colaboración\ncreativa. Transforma tu viaje artístico con asistencia de dibujo\ninteligente que crece contigo.",
+          "detail": "IA"
+        }
+      },
+      "content": {
+        "buttons": {
+          "btnGeneration": "Escuchando tu lado más artístico..."
+        },
+        "canvas": {
+          "data": {
+            "title": "Comienza a dibujar con guía de IA",
+            "subtitle": "Bosqueja, aprende y explora juntos"
+          }
+        },
+        "learning": {
+          "indicator1": "Aprendiendo...",
+          "indicator2": "Adaptándose...",
+          "indicator3": "Mejorando...",
+          "indicator4": "Bosquejando...",
+          "indicator5": "Renderizando..."
+        }
+      }
+    }
+  },
   "auth": {
     "navbar": {
       "noAccount": "¿No tienes una cuenta?",
@@ -88,7 +121,96 @@
       }
     }
   },
-  "workspace": {},
+  "workspace": {
+    "sidebar": {
+      "navigation": {
+        "home": {
+          "id": "home",
+          "label": "Inicio"
+        },
+        "file": {
+          "id": "files",
+          "label": "Mis archivos"
+        },
+        "setting": {
+          "id": "settings",
+          "label": "Configuración"
+        }
+      },
+      "header": {
+        "status": {
+          "payment": {
+            "plan": {
+              "free": "Plan gratuito"
+            }
+          }
+        }
+      },
+      "upgrade": {
+        "text": {
+          "logout": "Cerrar sesión",
+          "unlock": "Mejora tu plan para desbloquear más funciones"
+        },
+        "button": {
+          "upgrade": "Mejorar"
+        }
+      }
+    },
+    "content": {
+      "home": {
+        "header": {
+          "title": "Inicio"
+        },
+        "main": {
+          "templates": {
+            "title": "Comienza con plantillas",
+            "button": "Ver plantillas"
+          },
+          "recent": {
+            "title": "Recientes",
+            "project": {
+              "cardInfo": {
+                "edit": "Editado",
+                "by": "por"
+              }
+            }
+          },
+          "all": {
+            "title": "Todos los archivos",
+            "sort": "Últimos creados",
+            "table": {
+              "columns": {
+                "name": "Nombre",
+                "created": "Creado",
+                "editBy": "Editado por",
+                "location": "Ubicación"
+              }
+            }
+          }
+        }
+      },
+      "file": {
+        "header": {
+          "title": "Mis archivos",
+          "button": {
+            "new": {
+              "folder": "Nueva carpeta",
+              "file": "Nuevo archivo"
+            }
+          }
+        },
+        "section": {
+          "folder": {
+            "title": "Carpetas"
+          },
+          "file": {
+            "title": "Archivos"
+          }
+        }
+      },
+      "setting": {}
+    }
+  },
   "editor": {
     "toolbar": {
       "control": {

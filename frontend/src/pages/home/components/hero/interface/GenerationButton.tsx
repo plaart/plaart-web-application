@@ -1,6 +1,8 @@
 import { motion } from "framer-motion";
+import useIntl from "../../../../../hooks/useIntl";
 
 export const GenerationButton = () => {
+  const { t } = useIntl();
   return (
     <motion.div
       className="bg-gradient-to-r from-blue-600 to-purple-600 text-white py-4 px-8 rounded-lg text-center cursor-pointer relative overflow-hidden"
@@ -13,7 +15,7 @@ export const GenerationButton = () => {
         transition={{ duration: 2, repeat: Infinity, ease: "linear" }}
       />
       <span className="relative z-10 text-lg font-medium">
-        Listening to your most artistic side...
+        {t("home.hero.content.buttons.btnGeneration")}
       </span>
 
       {/* AI Brain Icon */}

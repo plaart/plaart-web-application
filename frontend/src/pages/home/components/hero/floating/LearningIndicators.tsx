@@ -1,7 +1,15 @@
 import { motion } from "framer-motion";
+import useIntl from "../../../../../hooks/useIntl";
 
 export const LearningIndicators = () => {
-  const indicators = ["Learning...", "Adapting...", "Improving..."];
+  const { t } = useIntl();
+  const indicators = [
+    t("home.hero.content.learning.indicator1"),
+    t("home.hero.content.learning.indicator2"),
+    t("home.hero.content.learning.indicator3"),
+    t("home.hero.content.learning.indicator4"),
+    t("home.hero.content.learning.indicator5"),
+  ];
 
   return (
     <>

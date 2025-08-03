@@ -2,7 +2,6 @@ import { motion } from "framer-motion";
 import { useNavigate, useLocation } from "react-router-dom";
 import useIntl from "../../../hooks/useIntl";
 
-
 export const AuthNavbar = () => {
   const { t } = useIntl();
   const navigate = useNavigate();
@@ -24,6 +23,10 @@ export const AuthNavbar = () => {
     }
   };
 
+  const handleHome = () => {
+    navigate("/");
+  };
+
   return (
     <motion.nav
       className="sticky top-0 z-50 py-3 backdrop-blur-lg border-b border-neutral-200/80 bg-white/80"
@@ -36,7 +39,9 @@ export const AuthNavbar = () => {
           <motion.div
             className="flex items-center flex-shrink-0"
             whileHover={{ scale: 1.05 }}>
-            <span className="text-2xl font-bold tracking-tight text-black">
+            <span
+              className="text-2xl font-bold tracking-tight text-black"
+              onClick={handleHome}>
               {t("common.brand.name")}
             </span>
           </motion.div>

@@ -1,8 +1,10 @@
 import { motion } from "framer-motion";
 import { useNavigate } from "react-router-dom";
+import useIntl from "../../../../hooks/useIntl";
 
 export const HeroButtons = () => {
   const navigate = useNavigate();
+  const { t } = useIntl();
 
   const handleGetStarted = () => {
     navigate("/auth/login");
@@ -18,12 +20,12 @@ export const HeroButtons = () => {
         whileHover={{ scale: 1.05, y: -2 }}
         whileTap={{ scale: 0.95 }}
         onClick={handleGetStarted}>
-        Get started
+          {t("home.hero.buttons.btnStart")}
       </motion.button>
       <motion.button
         className="text-white px-8 py-3 text-lg font-medium hover:text-gray-400 transition-colors duration-200 border border-gray-300 rounded-lg hover:border-gray-400"
         whileHover={{ scale: 1.05 }}>
-        Watch Docs
+        {t("home.hero.buttons.btnDocs")}
       </motion.button>
     </motion.div>
   );

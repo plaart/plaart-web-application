@@ -4,13 +4,13 @@ import type { LoginRequest } from "../../types/auth/LoginRequest";
 import type { RegisterRequest } from "../../types/auth/RegisterRequest";
 
 export interface AuthContextType {
-  user: User | null;
+  user: User | undefined;
   loading: boolean;
   isAuthenticated: boolean;
   login: (data: LoginRequest) => Promise<void>;
   register: (data: RegisterRequest) => Promise<void>;
   logout: () => void;
-  refreshToken: () => Promise<void>;
+  refreshToken: () => Promise<boolean>;
   refetchUser: () => Promise<void>;
 }
 
