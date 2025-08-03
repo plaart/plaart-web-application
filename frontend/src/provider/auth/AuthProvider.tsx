@@ -17,14 +17,14 @@ interface AuthProviderProps {
 }
 
 export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
-  const [user, setUser] = useState<User | null>(null);
+  const [user, setUser] = useState<User>();
   const [loading, setLoading] = useState(true);
   const navigate = useNavigate();
 
   // Función para redirigir según el rol
   const redirectByRole = (userRole: string) => {
     console.log("Redirigiendo usuario con rol:", userRole);
-    
+
     switch (userRole) {
       case "ADMIN":
         console.log("Redirigiendo ADMIN a /dashboard");
@@ -45,19 +45,21 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
     }
   };
 
-  const refreshToken = async (): Promise<void> => {
+  const refreshToken = async (): Promise<boolean> => {
     const refreshTokenValue = apiService.auth.getRefreshToken();
     if (!refreshTokenValue) {
       logout();
-      return;
+      return false;
     }
     try {
       const response = await apiService.auth.refreshToken(refreshTokenValue);
       apiService.auth.storeTokens(response.accessToken, response.refreshToken);
-      await fetchUserProfile();
+      const userData = await fetchUserProfile();
+      return userData !== null;
     } catch (error) {
       console.error("Error refreshing token:", error);
       logout();
+      return false;
     }
   };
 
@@ -65,7 +67,6 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
     try {
       const userData = await apiService.user.getProfile();
       setUser(userData);
-      return userData;
     } catch (error) {
       console.error("Error fetching user profile:", error);
       logout();
@@ -82,15 +83,14 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
       // Obtener los datos del usuario
       const userData = await apiService.user.getProfile();
       setUser(userData);
-      
+
       toast.success("¡Inicio de sesión exitoso!");
-      
+
       console.log("Usuario logueado:", userData);
       console.log("Rol del usuario:", userData.role);
-      
+
       // Redirigir según el rol del usuario
       redirectByRole(userData.role);
-      
     } catch (error) {
       const apiError = error as ApiError;
       console.error("Login error:", apiError);
@@ -108,12 +108,11 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
 
       const userData = await apiService.user.getProfile();
       setUser(userData);
-      
+
       toast.success("¡Registro exitoso!");
-      
+
       // Redirigir según el rol del usuario después del registro
       redirectByRole(userData.role);
-      
     } catch (error) {
       const apiError = error as ApiError;
       console.error("Register error:", apiError);
@@ -124,7 +123,7 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
 
   const logout = (): void => {
     apiService.auth.clearTokens();
-    setUser(null);
+    //setUser({});
     toast.success("Sesión cerrada correctamente");
     navigate("/");
   };
@@ -146,7 +145,10 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
       try {
         let userData;
         if (apiService.auth.isTokenExpired(token)) {
-          await refreshToken();
+          const refreshSuccess = await refreshToken();
+          if (refreshSuccess) {
+            userData = user;
+          }
         } else {
           userData = await fetchUserProfile();
         }
@@ -154,12 +156,14 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
         // Solo redirigir si estamos en la homepage y hay un usuario
         const currentPath = window.location.pathname;
         console.log("Ruta actual:", currentPath);
-        console.log("Usuario en inicialización:", userData || user);
-        
+
         if (currentPath === "/" && (userData || user)) {
           const userToRedirect = userData || user;
           if (userToRedirect) {
-            console.log("Redirigiendo desde homepage con usuario:", userToRedirect.role);
+            console.log(
+              "Redirigiendo desde homepage con usuario:",
+              userToRedirect.role
+            );
             redirectByRole(userToRedirect.role);
           }
         }
