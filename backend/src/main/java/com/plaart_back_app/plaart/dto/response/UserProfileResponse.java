@@ -2,8 +2,6 @@ package com.plaart_back_app.plaart.dto.response;
 
 import java.time.LocalDateTime;
 
-import com.plaart_back_app.plaart.model.User;
-
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
