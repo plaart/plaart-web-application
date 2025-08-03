@@ -121,7 +121,96 @@
       }
     }
   },
-  "workspace": {},
+  "workspace": {
+    "sidebar": {
+      "navigation": {
+        "home": {
+          "id": "home",
+          "label": "Inicio"
+        },
+        "file": {
+          "id": "files",
+          "label": "Mis archivos"
+        },
+        "setting": {
+          "id": "settings",
+          "label": "Configuración"
+        }
+      },
+      "header": {
+        "status": {
+          "payment": {
+            "plan": {
+              "free": "Plan gratuito"
+            }
+          }
+        }
+      },
+      "upgrade": {
+        "text": {
+          "logout": "Cerrar sesión",
+          "unlock": "Mejora tu plan para desbloquear más funciones"
+        },
+        "button": {
+          "upgrade": "Mejorar"
+        }
+      }
+    },
+    "content": {
+      "home": {
+        "header": {
+          "title": "Inicio"
+        },
+        "main": {
+          "templates": {
+            "title": "Comienza con plantillas",
+            "button": "Ver plantillas"
+          },
+          "recent": {
+            "title": "Recientes",
+            "project": {
+              "cardInfo": {
+                "edit": "Editado",
+                "by": "por"
+              }
+            }
+          },
+          "all": {
+            "title": "Todos los archivos",
+            "sort": "Últimos creados",
+            "table": {
+              "columns": {
+                "name": "Nombre",
+                "created": "Creado",
+                "editBy": "Editado por",
+                "location": "Ubicación"
+              }
+            }
+          }
+        }
+      },
+      "file": {
+        "header": {
+          "title": "Mis archivos",
+          "button": {
+            "new": {
+              "folder": "Nueva carpeta",
+              "file": "Nuevo archivo"
+            }
+          }
+        },
+        "section": {
+          "folder": {
+            "title": "Carpetas"
+          },
+          "file": {
+            "title": "Archivos"
+          }
+        }
+      },
+      "setting": {}
+    }
+  },
   "editor": {
     "toolbar": {
       "control": {

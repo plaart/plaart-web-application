@@ -121,7 +121,97 @@
       }
     }
   },
-  "workspace": {},
+  "workspace": {
+    "sidebar": {
+      "navigation": {
+        "home": {
+          "id": "home",
+          "label": "Home"
+        },
+        "file": {
+          "id": "files",
+          "label": "My Files"
+        },
+        "setting": {
+          "id": "settings",
+          "label": "Settings"
+        }
+      },
+      "header": {
+        "status": {
+          "payment": {
+            "plan": {
+              "free": "Free plan"
+            }
+          }
+        }
+      },
+      "upgrade": {
+        "text": {
+          "logout": "Logout",
+          "unlock": "Upgrade to unlock more features"
+        },
+        "button": {
+          "upgrade": "Upgrade"
+        }
+      }
+    },
+    "content": {
+      "home": {
+        "header": {
+          "title": "Home",
+          "actionBtn": "Create Project"
+        },
+        "main": {
+          "templates": {
+            "title": "Get started with templates",
+            "button": "Show Templates"
+          },
+          "recent": {
+            "title": "Recent",
+            "project": {
+              "cardInfo": {
+                "edit": "Edited",
+                "by": "by"
+              }
+            }
+          },
+          "all": {
+            "title": "All files",
+            "sort": "Last created",
+            "table": {
+              "columns": {
+                "name": "Name",
+                "created": "Created",
+                "editBy": "Edited by",
+                "location": "Location"
+              }
+            }
+          }
+        }
+      },
+      "file": {
+        "header": {
+          "title": "My Files",
+          "button": {
+            "new": {
+              "folder": "New folder",
+              "file": "New file"
+            }
+          }
+        },
+        "section": {
+          "folder": {
+            "title": "Folders"
+          },
+          "file": {
+            "title": "Files"
+          }
+        }
+      },
+      "setting": {}
+    }
+  },
   "editor": {
     "toolbar": {
       "control": {
