@@ -1,4 +1,3 @@
-import React from "react";
 import { motion } from "framer-motion";
 import { InterfaceHeader } from "./interface/InterfaceHeader";
 import { DrawingCanvas } from "./interface/DrawingCanvas";
