@@ -1,6 +1,7 @@
 import { adminService } from "./adminService";
 import { authService } from "./authService";
 import { managerService } from "./managerService";
+import { projectService } from "./projectService";
 import { testService } from "./testService";
 import { userService } from "./userService";
 
@@ -10,4 +11,5 @@ export const apiService = {
   manager: managerService,
   admin: adminService,
   test: testService,
+  project: projectService,
 };
