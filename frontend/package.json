@@ -13,6 +13,7 @@
     "@remixicon/react": "^4.6.0",
     "@tailwindcss/vite": "^4.1.11",
     "clsx": "^2.1.1",
+    "date-fns": "^4.1.0",
     "framer-motion": "^12.23.5",
     "jwt-decode": "^4.0.0",
     "react": "^19.1.0",
