@@ -1,7 +1,10 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { useEffect, useState } from "react";
 import IntlContext from "../../context/intl/IntlContext";
-import Translations, { LANGUAGES } from "../../shared/locales";
+import Translations, {
+  LANGUAGES,
+  type TranslationsSchema,
+} from "../../shared/locales";
 
 type IntlProps = {
   children: React.ReactNode;
@@ -9,7 +12,9 @@ type IntlProps = {
 
 const IntlProvider = ({ children }: IntlProps) => {
   const [locale, setLocale] = useState<string>(LANGUAGES.en);
-  const [messages, setMessages] = useState(Translations[LANGUAGES.en]);
+  const [messages, setMessages] = useState<TranslationsSchema>(
+    Translations[LANGUAGES.en]
+  );
 
   useEffect(() => {
     const selectedMessages = Translations[locale as keyof typeof Translations];
@@ -17,6 +22,19 @@ const IntlProvider = ({ children }: IntlProps) => {
       setMessages(selectedMessages);
     } else {
       console.warn(`Translations for locale "${locale}" not found`);
+    }
+  }, [locale]);
+
+  useEffect(() => {
+    if (process.env.NODE_ENV === "development") {
+      const enKeys = JSON.stringify(Object.keys(Translations[LANGUAGES.en]));
+      const currentKeys = JSON.stringify(Object.keys(Translations[locale]));
+      if (enKeys !== currentKeys) {
+        console.warn(
+          "⚠️ Missing or mismatched translation keys for locale:",
+          locale
+        );
+      }
     }
   }, [locale]);
 
@@ -42,7 +60,7 @@ const IntlProvider = ({ children }: IntlProps) => {
   };
 
   return (
-    <IntlContext.Provider value={{ t, setLocale }}>
+    <IntlContext.Provider value={{ t, setLocale, getLocale: () => locale }}>
       {children}
     </IntlContext.Provider>
   );
