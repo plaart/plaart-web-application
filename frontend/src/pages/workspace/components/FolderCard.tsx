@@ -1,22 +1,27 @@
-import { RiFolderLine, RiMoreLine } from '@remixicon/react';
-import { motion } from 'framer-motion';
-// Folder card component
-const FolderCard = ({ folder }) => (
-  <motion.div 
-    initial={{ y: 20, opacity: 0 }}
-    animate={{ y: 0, opacity: 1 }}
-    whileHover={{ y: -2 }}
-    className="bg-white rounded-lg p-4 shadow-sm border hover:shadow-md transition-shadow cursor-pointer"
-  >
-    <div className="flex items-start justify-between mb-3">
-      <div className="w-12 h-12 bg-blue-50 rounded-lg flex items-center justify-center">
-        <RiFolderLine size={20} className="text-blue-500" />
+import { motion } from "framer-motion";
+import { RiFolder5Line, RiExpandVerticalLine } from "@remixicon/react";
+import type { Folder } from "../../../types/types";
+
+type Props = {
+  folder: Folder;
+};
+
+export const FolderCard = ({ folder }: Props) => (
+  <motion.div
+    key={folder.id}
+    whileHover={{ scale: 1.02 }}
+    className="bg-gray-800 rounded-lg p-4 cursor-pointer group relative">
+    <div className="flex items-center justify-between">
+      <div className="flex items-center space-x-3">
+        <RiFolder5Line size={24} className="text-gray-400" />
+        <div>
+          <h3 className="font-medium text-white">{folder.name}</h3>
+          <p className="text-sm text-gray-400">{folder.fileCount} files</p>
+        </div>
       </div>
-      <button className="text-gray-400 hover:text-gray-600">
-        <RiMoreLine size={16} />
+      <button className="opacity-0 group-hover:opacity-100 transition-opacity">
+        <RiExpandVerticalLine size={16} className="text-gray-400" />
       </button>
     </div>
-    <h3 className="font-medium text-gray-900 mb-1">{folder.name}</h3>
-    <p className="text-xs text-gray-400">{folder.fileCount} files</p>
   </motion.div>
 );

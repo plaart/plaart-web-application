@@ -7,13 +7,41 @@ import {
   RiUserLine,
   RiFlashlightLine,
 } from "@remixicon/react";
+import useIntl from "../../../hooks/useIntl";
+import type { User } from "../../../types/user/User";
 
-// Sidebar component with TypeScript-style props
-export const Sidebar = ({ currentPage, onPageChange, onLogout, user }) => {
+type MenuPageId = string;
+
+interface SidebarProps {
+  currentPage: MenuPageId;
+  onPageChange: (pageId: MenuPageId) => void;
+  onLogout: () => void;
+  user: User;
+}
+
+export const Sidebar = ({
+  currentPage,
+  onPageChange,
+  onLogout,
+  user,
+}: SidebarProps) => {
+  const { t } = useIntl();
   const menuItems = [
-    { id: "home", label: "Home", icon: RiHomeLine },
-    { id: "files", label: "My Files", icon: RiFolderLine },
-    { id: "settings", label: "Settings", icon: RiSettingsLine },
+    {
+      id: t("workspace.sidebar.navigation.home.id"),
+      label: t("workspace.sidebar.navigation.home.label"),
+      icon: RiHomeLine,
+    },
+    {
+      id: t("workspace.sidebar.navigation.file.id"),
+      label: t("workspace.sidebar.navigation.file.label"),
+      icon: RiFolderLine,
+    },
+    {
+      id: t("workspace.sidebar.navigation.setting.id"),
+      label: t("workspace.sidebar.navigation.setting.label"),
+      icon: RiSettingsLine,
+    },
   ];
 
   return (
@@ -25,11 +53,18 @@ export const Sidebar = ({ currentPage, onPageChange, onLogout, user }) => {
       <div className="p-4 border-b border-gray-800">
         <div className="flex items-center space-x-3">
           <div className="w-8 h-8 bg-gradient-to-br from-purple-500 to-pink-500 rounded-lg flex items-center justify-center">
-            <span className="text-xs font-bold">SN</span>
+            <span className="text-xs font-bold">
+              {user.firstName?.[0]}
+              {user.lastName?.[0]}
+            </span>
           </div>
           <div>
-            <h2 className="font-medium">Sixtus Nosike's Wo...</h2>
-            <p className="text-xs text-gray-400">Free plan</p>
+            <h2 className="font-medium">
+              {user.firstName} {user.lastName}'s Wo...
+            </h2>
+            <p className="text-xs text-gray-400">
+              {t("workspace.sidebar.header.status.payment.plan.free")}
+            </p>
           </div>
         </div>
       </div>
@@ -64,14 +99,14 @@ export const Sidebar = ({ currentPage, onPageChange, onLogout, user }) => {
           <div className="flex items-center space-x-2 mb-2">
             <RiFlashlightLine size={16} className="text-blue-400" />
             <span className="text-sm font-medium">
-              Upgrade to unlock more features
+              {t("workspace.sidebar.upgrade.text.unlock")}
             </span>
           </div>
           <motion.button
             whileHover={{ scale: 1.02 }}
             whileTap={{ scale: 0.98 }}
             className="w-full bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg text-sm transition-colors">
-            Upgrade
+            {t("workspace.sidebar.upgrade.button.upgrade")}
           </motion.button>
         </div>
 
@@ -87,7 +122,7 @@ export const Sidebar = ({ currentPage, onPageChange, onLogout, user }) => {
           <button
             onClick={onLogout}
             className="text-gray-400 hover:text-red-400 transition-colors"
-            title="Logout">
+            title={t("workspace.sidebar.upgrade.text.logout")}>
             <RiLogoutBoxLine size={16} />
           </button>
         </div>

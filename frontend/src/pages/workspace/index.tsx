@@ -6,18 +6,31 @@ import Home from "./contents/Home";
 import Files from "./contents/Files";
 import Settings from "./contents/Setting";
 import { Sidebar } from "./components/Sidebar";
+import { useLogger } from "../../hooks/useLogger";
+import { useProjects } from "../../hooks/useProject";
+import { WORKSPACE_PAGE } from "../../constant";
 
 const WorkspacePage = () => {
   const { user, logout } = useAuth();
-  const [currentPage, setCurrentPage] = useState("home");
+  const [currentPage, setCurrentPage] = useState(WORKSPACE_PAGE.HOME);
+  const logger = useLogger();
+  const { id, firstName, lastName, email } = user!;
+  const { projects } = useProjects(id);
+
+  logger.info("INFORMACION DEL USUARIO :::", {
+    userId: id,
+    name: `${firstName} ${lastName}`,
+    email: email,
+    projects: JSON.stringify(projects),
+  });
 
   const renderPage = () => {
     switch (currentPage) {
-      case "home":
+      case WORKSPACE_PAGE.HOME:
         return <Home />;
-      case "files":
+      case WORKSPACE_PAGE.FILE:
         return <Files />;
-      case "settings":
+      case WORKSPACE_PAGE.SETTING:
         return <Settings />;
       default:
         return <Home />;
@@ -30,7 +43,7 @@ const WorkspacePage = () => {
         currentPage={currentPage}
         onPageChange={setCurrentPage}
         onLogout={logout}
-        user={user}
+        user={user!}
       />
       <div className="flex-1 overflow-auto">
         <AnimatePresence mode="wait">
