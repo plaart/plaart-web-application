@@ -6,6 +6,7 @@ import DashboardPage from "./pages/Dashboard";
 import ProfilePage from "./pages/ProfilePage";
 import UsersPage from "./pages/UsersPage";
 import WorkspacePage from "./pages/workspace";
+import Editor from "./pages/editor";
 
 const AppRoutes = () => {
   console.log("AppRoutes renderizado");
@@ -35,6 +36,15 @@ const AppRoutes = () => {
         element={
           <ProtectedRoute>
             <WorkspacePage />
+          </ProtectedRoute>
+        }
+      />
+      {/* Workspace - Para USER y MANAGER */}
+      <Route
+        path="/editor/:id"
+        element={
+          <ProtectedRoute>
+            <Editor />
           </ProtectedRoute>
         }
       />
