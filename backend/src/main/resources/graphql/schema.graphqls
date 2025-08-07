@@ -1,108 +1,236 @@
 scalar DateTime
 
-# Types
-type User {
-    id: ID!
-    email: String!
-    username: String!
-    firstName: String!
-    lastName: String!
-    avartar: String
-    # Roles
-    role: Role!
-    # Timestamps
-    createdAt: DateTime!
-    updatedAt: DateTime!
-    lastLogin: DateTime!
-    # Additional fields
-    enabled: Boolean!
-    emailVerified: Boolean!
-    accountNonExpired: Boolean!
-    accountNonLocked: Boolean!
-    credentialsNonExpired: Boolean!
+# Schema GraphQL para Editor - Versión limpia sin duplicados
+
+# Tipos principales
+type Editor {
+  id: ID!
+  objectLayers: [EditorObjectLayer]
+  objectLayerSelected: EditorObjectLayer
+  userId: String!
+  projectId: String!
+  activeDrawLine: DrawLine
+  editorDimension: Dimension
+  screenInfo: EditorScreenInfo
+  editorMetadata: EditorMetaData
 }
 
-type AuthPayload {
-    accessToken: String!
-    refreshToken: String
-    user: User!
+type EditorResponse {
+  success: Boolean!
+  message: String
+  errorCode: String
+  editor: Editor
+  timestamp: String
+  operation: String
+  executionTimeMs: Int
+  stats: EditorStats
+  warnings: [String]
+  hasUnsavedChanges: Boolean
+}
+
+type EditorStats {
+  totalLayers: Int
+  visibleLayers: Int
+  layersWithImages: Int
+  layersWithDrawing: Int
+  totalImageSize: Int
+  totalDrawingPoints: Int
+  zoomLevel: Int
+  visualMode: String
+  hasComplexLayers: Boolean
+  averageLayerComplexity: Float
+}
+
+type EditorObjectLayer {
+  id: ID!
+  transform: Transform
+  state: State
+  style: Style
+  drawLine: DrawLine
+  hasImageContent: Boolean
+  imageContent: ImageContent
+  objectMetadata: EditorMetaData
+}
+
+type ImageContent {
+  image: String
+  src: String
+  loading: Boolean!
+}
+
+type Transform {
+  posX: Float
+  posY: Float
+  width: Float
+  height: Float
+  radius: Float
+  rotation: Float
+  scaleX: Float
+  scaleY: Float
+  points: [Float]
+}
+
+type State {
+  objectLayerSelectedId: ID
+  draggable: Boolean
+  isSelected: Boolean
+  isVisible: Boolean
+}
+
+type Style {
+  tool: String
+  fill: String
+  color: String
+  stroke: Float
+  strokeWidth: Float
+  zIndex: Int
+}
+
+type DrawLine {
+  tool: Tool!
+  lines: [Int]
+  brush: Brush
+}
+
+type Brush {
+  color: String
+  fill: String
+  size: Int
+}
+
+type Dimension {
+  width: Float
+  height: Float
+}
+
+type EditorScreenInfo {
+  zoom: Int
+  visualMode: VisualMode
+  status: Boolean
+}
+
+type EditorMetaData {
+  createdAt: String
+  updatedAt: String
 }
 
 # Enums
-enum Role {
-    USER
-    MANAGER
-    ADMIN
+enum Tool {
+  BRUSH
+  ERASER
+  LINE
+  RECTANGLE
+  CIRCLE
+  TEXT
+  SELECT
+  MOVE
 }
 
+enum VisualMode {
+  NORMAL
+  DARK
+  HIGH_CONTRAST
+}
+
+# Inputs para mutations
+input RequestEditor {
+  projectId: String!
+  userId: String!
+}
+
+input UpdateEditorInput {
+  objectLayers: [EditorObjectLayerInput]
+  objectLayerSelected: EditorObjectLayerInput
+  userId: String!
+  projectId: String!
+  activeDrawLine: DrawLineInput
+  editorDimension: DimensionInput
+  screenInfo: EditorScreenInfoInput
+  editorMetadata: EditorMetaDataInput
+}
+
+input EditorObjectLayerInput {
+  id: ID
+  transform: TransformInput
+  state: StateInput
+  style: StyleInput
+  drawLine: DrawLineInput
+  hasImageContent: Boolean
+  imageContent: ImageContentInput
+  objectMetadata: EditorMetaDataInput
+}
+
+input ImageContentInput {
+  image: String
+  src: String
+  loading: Boolean
+}
+
+input TransformInput {
+  posX: Float
+  posY: Float
+  width: Float
+  height: Float
+  radius: Float
+  rotation: Float
+  scaleX: Float
+  scaleY: Float
+  points: [Float]
+}
+
+input StateInput {
+  objectLayerSelectedId: ID
+  draggable: Boolean
+  isSelected: Boolean
+  isVisible: Boolean
+}
+
+input StyleInput {
+  tool: String
+  fill: String
+  color: String
+  stroke: Float
+  strokeWidth: Float
+  zIndex: Int
+}
+
+input DrawLineInput {
+  tool: Tool!
+  lines: [Int]
+  brush: BrushInput
+}
+
+input BrushInput {
+  color: String
+  fill: String
+  size: Int
+}
+
+input DimensionInput {
+  width: Float
+  height: Float
+}
+
+input EditorScreenInfoInput {
+  zoom: Int
+  visualMode: VisualMode
+  status: Boolean
+}
+
+input EditorMetaDataInput {
+  createdAt: String
+  updatedAt: String
+}
+
+# Queries
 type Query {
-    # User queries
-    me: User
-
-    # Manager/Admin queries
-    users: [User!]!
-    user(id: ID!): User
-
-    # Test queries
-    publicTest: TestResponse!
-    userTest: TestResponse!
-    managerTest: TestResponse!
-    adminTest: TestResponse!
+  getEditor(input: RequestEditor!): EditorResponse!
+  editorExists(projectId: String!): Boolean!
+  getEditorStats(input: RequestEditor!): EditorStats
 }
 
+# Mutations
 type Mutation {
-    # User mutations
-    register(input: RegisterInput!): AuthPayload!
-    login(input: LoginInput!): AuthPayload!
-    refreshToken(refreshToken: String!): AuthPayload!
-
-    # User profile management
-    updateProfile(input: UpdateProfileInput!): User!
-    deleteProfile: Boolean!
-
-    # Admin operations
-    updateUser(id: ID!, input: UpdateUserInput!): User!
-    deleteUser(id: ID!): Boolean!
-    updateUserRole(id: ID!, role: Role!): User!
-    enableUser(id: ID!): User!
-    disableUser(id: ID!): User!
-}
-
-input RegisterInput {
-    firstName: String!
-    lastName: String!
-    email: String!
-    username: String!
-    password: String!
-}
-
-input UpdateProfileInput {
-    firstName: String
-    lastName: String
-    email: String
-    username: String
-    avatar: String
-    password: String
-}
-
-input LoginInput {
-    username: String!
-    password: String!
-}
-
-input UpdateUserInput {
-    firstName: String
-    lastName: String
-    email: String
-    username: String
-    avatar: String
-    role: Role
-    enabled: Boolean
-}
-
-type TestResponse {
-    message: String!
-    status: String!
-    role: String
-    allowedRoles: Boolean!
+  createEditor(input: RequestEditor!): EditorResponse!
+  updateEditor(input: UpdateEditorInput!): EditorResponse!
 }
