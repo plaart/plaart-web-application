@@ -1,91 +1,65 @@
-import type { DeviceInfo } from "../types";
+// Utilidades para detectar y manejar diferentes tipos de dispositivos
 
-const createDefaultDeviceInfo = (): DeviceInfo => {
+export const detectDevice = () => {
+  const userAgent = navigator.userAgent.toLowerCase();
+  const screenWidth = window.innerWidth;
+  
+  const isMobile = /android|webos|iphone|ipad|ipod|blackberry|iemobile|opera mini/i.test(userAgent) || screenWidth < 768;
+  const isTablet = /ipad/i.test(userAgent) || (screenWidth >= 768 && screenWidth < 1024);
+  const isDesktop = screenWidth >= 1024;
+  
   return {
-    isIOS: false,
-    isAndroid: false,
-    isMacOS: false,
-    isWindows: false,
-    isLinux: false,
-    isMobile: false,
-    isTablet: false,
-    isDesktop: true,
-    isSafari: false,
-    isChrome: false,
-    isFirefox: false,
-    isEdge: false,
-    platform: "",
-    userAgent: "",
-    hasTouch: false,
-    screenSize: "medium",
-    orientation: undefined,
-    isIOSVersion: () => false,
-    isMobileDevice: () => false,
+    isMobile,
+    isTablet,
+    isDesktop,
+    screenWidth,
+    userAgent
   };
 };
 
-// Detención de plataformas
-const detectIOS = (userAgent: string, platform: string): boolean => {
-  // tradicional
-  const iosDevices = [
-    "iPad Simulator",
-    "iPhone Simulator",
-    "iPod Simulator",
-    "iPad",
-    "iPhone",
-    "iPod",
-  ];
-  if (iosDevices.includes(platform)) return true;
-  // Detección para iPad moderno (iPadOs 13+)
-  if (userAgent.includes("Mac") && "ontouchend" in document) return true;
-  // Detección adiccional por user agent
-  return /iPad|iPhone|iPod/i.test(userAgent);
+export const getTouchCapabilities = () => {
+  return {
+    hasTouch: 'ontouchstart' in window || navigator.maxTouchPoints > 0,
+    maxTouchPoints: navigator.maxTouchPoints || 0,
+    supportsPen: navigator.maxTouchPoints > 1
+  };
 };
 
-const detectMobile = (userAgent: string): boolean => {
-  return /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(
-    userAgent
-  );
-};
-
-const detectTablet = (userAgent: string, isIOS: boolean): boolean => {
-  // iPad
-  if (
-    isIOS &&
-    (/iPad/i.test(userAgent) ||
-      (userAgent.includes("Mac") && "ontouchend" in document))
-  ) {
-    return true;
+export const getOptimalCanvasSize = () => {
+  const device = detectDevice();
+  
+  if (device.isMobile) {
+    return {
+      width: Math.min(device.screenWidth - 32, 600),
+      height: Math.min(window.innerHeight - 200, 400)
+    };
+  } else if (device.isTablet) {
+    return {
+      width: Math.min(device.screenWidth - 64, 800),
+      height: Math.min(window.innerHeight - 250, 600)
+    };
+  } else {
+    return {
+      width: Math.min(device.screenWidth - 128, 1200),
+      height: Math.min(window.innerHeight - 300, 800)
+    };
   }
-  return /Android/i.test(userAgent) && !/Mobile/i.test(userAgent);
 };
 
-const getScreenSize = (): "small" | "medium" | "large" => {
-  if (typeof window === "undefined") return "medium";
-
-  const width = window.innerWidth;
-  if (width < 768) return "small";
-  if (width < 1024) return "medium";
-  return "large";
-};
-
-const getOrientation = (): "portrait" | "landscape" | undefined => {
-  if (typeof window === "undefined") return undefined;
-
-  if (screen.orientation) {
-    return screen.orientation.angle === 0 || screen.orientation.angle === 180
-      ? "portrait"
-      : "landscape";
+export const getRecommendedBrushSize = () => {
+  const device = detectDevice();
+  const touch = getTouchCapabilities();
+  
+  if (device.isMobile && touch.hasTouch) {
+    return 8; // Más grande para dedos
+  } else if (device.isTablet && touch.supportsPen) {
+    return 3; // Tamaño medio para stylus
+  } else {
+    return 5; // Tamaño estándar para mouse
   }
-
-  return window.innerHeight > window.innerWidth ? "portrait" : "landscape";
 };
 
-export {
-  createDefaultDeviceInfo,
-  detectIOS,
-  getOrientation,
-  getScreenSize,
-  detectTablet,
-  detectMobile,
+export const shouldUseThickUI = () => {
+  const device = detectDevice();
+  return device.isMobile || device.isTablet;
 };

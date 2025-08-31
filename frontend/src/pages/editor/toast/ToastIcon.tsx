@@ -1,4 +1,4 @@
-import { motion, Easing } from "framer-motion";
+import { motion } from "framer-motion";
 import type { ToastType } from "./types";
 import { RiAlertLine, RiCheckLine } from "@remixicon/react";
 
@@ -8,7 +8,7 @@ const spinnerVariants = {
     transition: {
       duration: 1,
       repeat: Infinity,
-      ease: "linear" as Easing,
+      ease: "linear",
     },
   },
 };
