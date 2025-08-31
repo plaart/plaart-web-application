@@ -1,3 +1,4 @@
+import type { ToolType } from "./editor.enums";
 import type {
   Dimension,
   DrawLine,
@@ -47,4 +48,15 @@ export interface EditorResponse {
   hasUnsavedChanges?: boolean;
   editor?: Editor;
   stats?: EditorStats;
+}
+
+export interface CanvasShape {
+  id: number;
+  tool: ToolType;
+  x: number;
+  y: number;
+  width: number;
+  height: number;
+  radius: number;
+  points?: number[];
 }

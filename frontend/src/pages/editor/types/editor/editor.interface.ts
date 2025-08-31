@@ -1,4 +1,6 @@
+import type { KonvaEventObject } from "konva/lib/Node";
 import { type ToolType, type VisualModeType } from "./editor.enums";
+import type { CanvasShape } from "./editor.dto";
 
 // Interfaces que coinciden exactamente con GraphQL Schema
 export interface Brush {
@@ -9,8 +11,9 @@ export interface Brush {
 
 export interface DrawLine {
   tool: ToolType;
-  lines?: number[];
-  brush?: Brush;
+  points: number[];
+  color: string;
+  width: number;
 }
 
 export interface Transform {
@@ -70,8 +73,8 @@ export interface EditorScreenInfo {
 }
 
 export interface Dimension {
-  width?: number;
-  height?: number;
+  width: number;
+  height: number;
 }
 
 export interface Editor {
@@ -91,4 +94,51 @@ export interface LayerComponentProps {
   onLayerChange: (layerId: string, changes: Partial<EditorObjectLayer>) => void;
   onLayerSelect: (layerId: string) => void;
   selectedLayerId: string | null;
+}
+
+export interface ToolHandler {
+  onStart: (e: KonvaEventObject<MouseEvent | TouchEvent | null>) => void;
+  onMove: (e: KonvaEventObject<MouseEvent | TouchEvent | null>) => void;
+  onEnd: (e: KonvaEventObject<MouseEvent | TouchEvent | null>) => void;
+  result: [];
+}
+
+export interface ToolState {
+  lines: DrawLine[];
+  aiPointsSelection: Point[];
+  annotationsToDraw: CanvasShape[];
+  selectedShapeDrawId: number;
+  drawColor: string;
+  drawWidth: number;
+  currentTool: ToolType;
+}
+
+export interface PointerPosition {
+  x: number;
+  y: number;
+}
+
+export interface DrawingToolConfig {
+  tool: ToolType;
+  state: ToolState;
+  actions: ToolAction;
+}
+
+export interface Point {
+  x: number;
+  y: number;
+}
+
+export interface ToolAction {
+  setLines: (lines: DrawLine[] | ((prev: DrawLine[]) => DrawLine[])) => void;
+  setAiPointsSelection: (
+    points: Point[] | ((prev: Point[]) => Point[])
+  ) => void;
+  setAnnotationsToDraw: (
+    shapes: CanvasShape[] | ((prev: CanvasShape[]) => CanvasShape[])
+  ) => void;
+  setSelectedShapeDrawId: (id: number) => void;
+  setDrawColor: (color: string) => void;
+  setDrawWidth: (width: number) => void;
+  setCurrentTool: (tool: ToolType) => void;
 }

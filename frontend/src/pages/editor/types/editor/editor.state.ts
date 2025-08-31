@@ -1,30 +1,46 @@
+import type { CanvasShape } from "./editor.dto";
 import type { ToolType } from "./editor.enums";
-import type { Editor, EditorObjectLayer } from "./editor.interface";
-import type { CanvasSettings } from "./editor.ui";
+import type {
+  Dimension,
+  DrawLine,
+  Point,
+} from "./editor.interface";
 
 export interface EditorState {
-  serverEditor: Editor | null;
-  pendingChanges: Map<string, EditorObjectLayer>;
-  selectedLayerId: string | null;
   currentTool: ToolType;
-  canvasSettings: CanvasSettings;
-  isSyncing: boolean;
-  hasUnsavedChanges: boolean;
-  lastSyncTimestamp: number;
+  drawColor: string;
+  drawWidth: number;
+  //* Drawing state
+  lines: DrawLine[];
+  aiPointsSelection: Point[];
+  annotationsToDraw: CanvasShape[];
+  selectedShapeDrawId: number;
+  //* Canvas state
+  zoom: number;
+  dimension: Dimension;
 }
 
 export type EditorAction =
-  | { type: "LOAD_EDITOR"; payload: Editor }
-  | { type: "ADD_LAYER"; payload: EditorObjectLayer }
+  | { type: "SET_CURRENT_TOOL"; payload: ToolType }
+  | { type: "SET_DRAW_COLOR"; payload: string }
+  | { type: "SET_DRAW_WIDTH"; payload: number }
   | {
-      type: "UPDATE_LAYER";
-      payload: { id: string; changes: Partial<EditorObjectLayer> };
+      type: "SET_LINES";
+      payload: DrawLine[] | ((prev: DrawLine[]) => DrawLine[]);
     }
-  | { type: "DELETE_LAYER"; payload: string }
-  | { type: "SELECT_LAYER"; payload: string | null }
-  | { type: "SET_TOOL"; payload: ToolType }
+  | {
+      type: "SET_AI_POINTS_SELECTION";
+      payload: Point[] | ((prev: Point[]) => Point[]);
+    }
+  | {
+      type: "SET_ANNOTATIONS_TO_DRAW";
+      payload: CanvasShape[] | ((prev: CanvasShape[]) => CanvasShape[]);
+    }
+  | { type: "SET_SELECTED_SHAPE_DRAW_ID"; payload: number }
   | { type: "SET_ZOOM"; payload: number }
-  | { type: "SYNC_STARTED" }
-  | { type: "SYNC_COMPLETED"; payload: Editor }
-  | { type: "SYNC_FAILED"; payload: string }
-  | { type: "CLEAR_PENDING_CHANGES" };
+  | {
+      type: "SET_CANVAS_DIMENSIONS";
+      payload: { width: number; height: number };
+    }
+  | { type: "SET_SELECTED_LAYER_ID"; payload: string | null }
+  | { type: "CLEAR_CANVAS" };

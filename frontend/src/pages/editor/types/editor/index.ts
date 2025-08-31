@@ -6,5 +6,4 @@ export * from "./editor.ui";
 export * from "./editor.mapper";
 export * from "./editor.defaults";
 export * from "./editor.constants";
-export * from "./editor.factory";
 export * from "./editor.helper";
