@@ -1,0 +1,225 @@
+/* ===================================================== */
+/* ESTILOS ADICIONALES PARA CORREGIR VISUALIZACIÓN     */
+/* ===================================================== */
+
+/* Asegurar que los botones tengan el contraste adecuado */
+.btn-primary {
+  @apply bg-gradient-to-r from-blue-600 to-purple-600 text-white px-6 py-3 rounded-lg font-medium;
+  @apply hover:from-blue-700 hover:to-purple-700 transition-all duration-200;
+  @apply shadow-md hover:shadow-lg;
+  @apply border-0; /* Eliminar borders por defecto */
+}
+
+.btn-secondary {
+  @apply bg-white text-gray-700 px-6 py-3 rounded-lg font-medium;
+  @apply border-2 border-gray-300 hover:border-blue-500 hover:text-blue-600;
+  @apply transition-all duration-200 shadow-sm hover:shadow-md;
+}
+
+/* Fix específico para el botón Watch Docs */
+.hero-secondary-btn {
+  background-color: white !important;
+  color: #374151 !important; /* gray-700 */
+  border: 2px solid #d1d5db !important; /* gray-300 */
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06) !important;
+}
+
+.hero-secondary-btn:hover {
+  border-color: #3b82f6 !important; /* blue-500 */
+  color: #2563eb !important; /* blue-600 */
+  background-color: #eff6ff !important; /* blue-50 */
+  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05) !important;
+}
+
+/* Mejoras para el selector de idioma */
+.language-switcher-light {
+  @apply bg-white border border-gray-200 text-gray-700;
+  @apply hover:bg-gray-50 shadow-sm;
+}
+
+.language-switcher-dark {
+  @apply bg-gray-800 border border-gray-600 text-white;
+  @apply hover:bg-gray-700;
+}
+
+.language-switcher-default {
+  @apply bg-white/10 backdrop-blur-sm border border-white/20 text-white;
+  @apply hover:bg-white/20;
+}
+
+/* Asegurar que los dropdowns tengan el z-index correcto */
+.dropdown-menu {
+  @apply z-50 absolute;
+}
+
+/* Mejoras para el navbar */
+.navbar-blur {
+  @apply bg-white/90 backdrop-blur-md;
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+}
+
+/* Fixes para problemas específicos de visualización */
+.text-contrast-fix {
+  color: #374151 !important; /* gray-700 */
+}
+
+.text-contrast-fix:hover {
+  color: #2563eb !important; /* blue-600 */
+}
+
+/* Fix para botones que pueden tener problemas de visibilidad */
+.btn-visibility-fix {
+  background-color: white !important;
+  color: #374151 !important;
+  border: 2px solid #d1d5db !important; /* gray-300 */
+}
+
+.btn-visibility-fix:hover {
+  border-color: #3b82f6 !important; /* blue-500 */
+  color: #2563eb !important; /* blue-600 */
+  background-color: #eff6ff !important; /* blue-50 */
+}
+
+/* Mejoras para elementos flotantes y modales */
+.floating-element {
+  @apply shadow-2xl border border-gray-200;
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+}
+
+/* Asegurar que los iconos sean visibles */
+.icon-visibility {
+  @apply text-gray-600;
+}
+
+.icon-visibility:hover {
+  @apply text-blue-600;
+}
+
+/* Corrección para el LanguageSwitcher en diferentes contextos */
+.language-switcher-container {
+  @apply relative inline-block;
+}
+
+.language-switcher-button {
+  @apply flex items-center justify-between;
+  @apply px-3 py-2 rounded-lg font-medium;
+  @apply transition-all duration-200;
+  min-width: 120px;
+}
+
+.language-switcher-dropdown {
+  @apply absolute top-full left-0 mt-2 w-full;
+  @apply bg-white rounded-lg shadow-2xl border border-gray-200;
+  @apply overflow-hidden z-50;
+}
+
+.language-option {
+  @apply w-full flex items-center space-x-3 px-4 py-3;
+  @apply text-left transition-colors duration-150;
+  @apply hover:bg-gray-50;
+}
+
+.language-option.selected {
+  @apply bg-blue-50 text-blue-600;
+}
+
+/* Animaciones mejoradas */
+.fade-in {
+  animation: fadeIn 0.3s ease-in-out;
+}
+
+.slide-up {
+  animation: slideUp 0.3s ease-out;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes slideUp {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Mejoras para accesibilidad */
+.focus-visible {
+  @apply focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2;
+}
+
+/* Fixes específicos para mobile */
+@media (max-width: 768px) {
+  .mobile-menu-item {
+    @apply text-base font-medium py-3 px-4;
+    @apply border-b border-gray-100 last:border-b-0;
+  }
+
+  .mobile-language-switcher {
+    @apply scale-90 transform;
+  }
+
+  .mobile-visible {
+    display: block !important;
+  }
+
+  .md-hidden-fix {
+    display: none !important;
+  }
+}
+
+/* Responsive fixes */
+@media (max-width: 1024px) {
+  .lg-hidden-fix {
+    display: none !important;
+  }
+}
+
+/* Dark mode support para el LanguageSwitcher */
+@media (prefers-color-scheme: dark) {
+  .language-switcher-auto {
+    @apply bg-gray-800 border-gray-600 text-white;
+  }
+  
+  .language-switcher-auto .language-switcher-dropdown {
+    @apply bg-gray-800 border-gray-600;
+  }
+  
+  .language-switcher-auto .language-option {
+    @apply text-gray-200 hover:bg-gray-700;
+  }
+  
+  .language-switcher-auto .language-option.selected {
+    @apply bg-blue-900/50 text-blue-400;
+  }
+}
+
+/* Clases utility adicionales para facilitar correcciones rápidas */
+.visible-fix {
+  visibility: visible !important;
+  opacity: 1 !important;
+}
+
+.contrast-fix {
+  filter: contrast(1.2) !important;
+}
+
+.no-blur {
+  backdrop-filter: none !important;
+  -webkit-backdrop-filter: none !important;
+}
+
+.force-z-index {
+  z-index: 9999 !important;
+}

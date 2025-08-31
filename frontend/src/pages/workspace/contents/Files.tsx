@@ -102,20 +102,6 @@ const Files = () => {
         <h1 className="text-2xl font-semibold text-gray-900">
           {t("workspace.content.file.header.title")}
         </h1>
-        <div className="flex space-x-3">
-          <button 
-            className="px-4 py-2 border border-gray-300 rounded-lg hover:bg-gray-50 transition-colors"
-            onClick={() => toast.info("Función de carpetas próximamente")}
-          >
-            {t("workspace.content.file.header.button.new.folder")}
-          </button>
-          <button 
-            onClick={() => setShowCreateModal(true)}
-            className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors"
-          >
-            {t("workspace.content.file.header.button.new.file")}
-          </button>
-        </div>
       </div>
 
       {/* Barra de búsqueda */}
