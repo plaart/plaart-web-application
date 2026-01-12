@@ -17,6 +17,7 @@ const AppRoutes = () => {
       <Route path="/" element={<HomePage />} />
 
       {/* Rutas de autenticación (públicas) */}
+      <Route path="/auth" element={<AuthPages />} />
       <Route path="/auth/login" element={<AuthPages />} />
       <Route path="/auth/register" element={<AuthPages />} />
 
@@ -30,7 +31,7 @@ const AppRoutes = () => {
         }
       />
 
-      {/* Workspace - Para USER y MANAGER */}
+      {/* Workspace - Para usuarios autenticados */}
       <Route
         path="/workspace"
         element={
@@ -39,9 +40,10 @@ const AppRoutes = () => {
           </ProtectedRoute>
         }
       />
-      {/* Workspace - Para USER y MANAGER */}
+
+      {/* Editor - Para usuarios autenticados con ID de proyecto */}
       <Route
-        path="/editor/:id"
+        path="/editor/:projectId"
         element={
           <ProtectedRoute>
             <Editor />
@@ -49,6 +51,13 @@ const AppRoutes = () => {
         }
       />
 
+      {/* Editor sin ID - Redirigir al workspace */}
+      <Route
+        path="/editor"
+        element={<Navigate to="/workspace" replace />}
+      />
+
+      {/* Perfil - Para usuarios autenticados */}
       <Route
         path="/profile"
         element={
@@ -58,6 +67,7 @@ const AppRoutes = () => {
         }
       />
 
+      {/* Usuarios - Solo para MANAGER y ADMIN */}
       <Route
         path="/users"
         element={
@@ -67,7 +77,7 @@ const AppRoutes = () => {
         }
       />
 
-      {/* Catch all route */}
+      {/* Catch all route - Redirigir a home */}
       <Route path="*" element={<Navigate to="/" replace />} />
     </Routes>
   );

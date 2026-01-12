@@ -1,12 +1,20 @@
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
+import { useNavigate } from "react-router-dom";
+import { LanguageSwitcher } from "../../../../components/LanguageSwitcher";
 
 export const Navbar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const navigate = useNavigate();
+
+  const handleLogin = () => {
+    navigate("/auth/login");
+    setIsMenuOpen(false);
+  };
 
   return (
     <motion.nav
-      className="fixed top-0 left-0 right-0 z-50 bg-white/80 backdrop-blur-md border-b border-gray-200"
+      className="fixed top-0 left-0 right-0 z-50 bg-white/90 backdrop-blur-md border-b border-gray-200/50 shadow-sm"
       initial={{ y: -100 }}
       animate={{ y: 0 }}
       transition={{ duration: 0.6 }}
@@ -15,28 +23,39 @@ export const Navbar = () => {
         <div className="flex justify-between items-center h-16">
           {/* Logo */}
           <motion.div
-            className="text-2xl font-bold text-black"
+            className="text-2xl font-bold text-gray-900 cursor-pointer"
             whileHover={{ scale: 1.05 }}
+            onClick={() => navigate("/")}
           >
-            plaart
+            <span className="bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
+              plaart
+            </span>
           </motion.div>
 
-          {/* Desktop Menu - FORZAR VISUALIZACIÓN */}
-          <div className="flex items-center space-x-8" style={{ display: 'flex' }}>
+          {/* Desktop Menu */}
+          <div className="hidden lg:flex items-center space-x-8">
             {/* Enlaces del menú */}
-            <div className="hidden lg:flex items-center space-x-6">
-              {["Products", "Solutions", "Resources", "Pricing", "Contact"].map(
-                (item) => (
+            <div className="flex items-center space-x-6">
+              {[
+                { name: "Products", href: "#products" },
+                { name: "Solutions", href: "#solutions" },
+                { name: "Resources", href: "#resources" },
+                { name: "Pricing", href: "#pricing" },
+                { name: "Contact", href: "#contact" }
+              ].map((item) => {
+                const hasDropdown = ["Products", "Solutions", "Resources"].includes(item.name);
+                
+                return (
                   <motion.a
-                    key={item}
-                    href="#"
-                    className="text-gray-600 hover:text-black transition-colors duration-200 flex items-center text-sm font-medium"
+                    key={item.name}
+                    href={item.href}
+                    className="flex items-center gap-1 text-gray-700 hover:text-blue-600 transition-colors duration-200 text-sm font-medium group"
                     whileHover={{ y: -2 }}
                   >
-                    {item}
-                    {["Products", "Solutions", "Resources"].includes(item) && (
+                    {item.name}
+                    {hasDropdown && (
                       <svg
-                        className="w-4 h-4 ml-1"
+                        className="w-4 h-4 text-gray-400 group-hover:text-blue-600 transition-colors"
                         fill="none"
                         stroke="currentColor"
                         viewBox="0 0 24 24"
@@ -50,27 +69,40 @@ export const Navbar = () => {
                       </svg>
                     )}
                   </motion.a>
-                )
-              )}
+                );
+              })}
             </div>
 
-            {/* Botón Login - Visible en desktop */}
-            <motion.button
-              className="hidden lg:block bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition-colors duration-200 text-sm font-medium"
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}
-            >
-              Login
-            </motion.button>
+            {/* Selector de idioma - Desktop */}
+            <LanguageSwitcher variant="light" size="sm" />
 
-            {/* Mobile Menu Button - Solo visible en móvil */}
+            {/* Botón Login - Desktop */}
             <motion.button
-              className="lg:hidden p-2 rounded-lg hover:bg-gray-100 transition-colors"
+              className="bg-gradient-to-r from-blue-600 to-purple-600 text-white px-6 py-2 rounded-lg hover:from-blue-700 hover:to-purple-700 transition-all duration-200 text-sm font-medium shadow-md hover:shadow-lg"
+              whileHover={{ scale: 1.05, y: -1 }}
+              whileTap={{ scale: 0.95 }}
+              onClick={handleLogin}
+            >
+              Iniciar Sesión
+            </motion.button>
+          </div>
+
+          {/* Mobile Menu Button */}
+          <div className="lg:hidden flex items-center space-x-3">
+            {/* Selector de idioma - Mobile (siempre visible) */}
+            <div className="scale-90">
+              <LanguageSwitcher variant="light" size="sm" />
+            </div>
+            
+            {/* Hamburger button */}
+            <motion.button
+              className="p-2 rounded-lg hover:bg-gray-100 transition-colors"
               onClick={() => setIsMenuOpen(!isMenuOpen)}
               whileTap={{ scale: 0.95 }}
+              aria-label="Abrir menú"
             >
               <svg
-                className="w-6 h-6"
+                className="w-6 h-6 text-gray-700"
                 fill="none"
                 stroke="currentColor"
                 viewBox="0 0 24 24"
@@ -115,13 +147,22 @@ export const Navbar = () => {
                 ease: "easeInOut"
               }}
             >
-              <div className="py-4 space-y-2">
-                {["Products", "Solutions", "Resources", "Pricing", "Contact"].map(
-                  (item, index) => (
+              <div className="py-4 space-y-1">
+                {/* Navigation Links */}
+                {[
+                  { name: "Products", href: "#products" },
+                  { name: "Solutions", href: "#solutions" },
+                  { name: "Resources", href: "#resources" },
+                  { name: "Pricing", href: "#pricing" },
+                  { name: "Contact", href: "#contact" }
+                ].map((item, index) => {
+                  const hasDropdown = ["Products", "Solutions", "Resources"].includes(item.name);
+                  
+                  return (
                     <motion.a
-                      key={item}
-                      href="#"
-                      className="block px-4 py-3 text-gray-600 hover:text-black hover:bg-gray-50 rounded-lg mx-2 transition-colors duration-200"
+                      key={item.name}
+                      href={item.href}
+                      className="flex items-center justify-between px-4 py-3 text-gray-700 hover:text-blue-600 hover:bg-blue-50 rounded-lg mx-2 transition-all duration-200"
                       initial={{ 
                         opacity: 0, 
                         x: -20 
@@ -130,38 +171,37 @@ export const Navbar = () => {
                         opacity: 1, 
                         x: 0 
                       }}
-                      exit={{ 
-                        opacity: 0, 
-                        x: -20 
-                      }}
                       transition={{ 
                         delay: index * 0.05,
                         duration: 0.2
                       }}
                       whileTap={{ scale: 0.98 }}
+                      onClick={() => setIsMenuOpen(false)}
                     >
-                      <div className="flex items-center justify-between">
-                        {item}
-                        {["Products", "Solutions", "Resources"].includes(item) && (
-                          <svg
-                            className="w-4 h-4 text-gray-400"
-                            fill="none"
-                            stroke="currentColor"
-                            viewBox="0 0 24 24"
-                          >
-                            <path
-                              strokeLinecap="round"
-                              strokeLinejoin="round"
-                              strokeWidth={2}
-                              d="M9 5l7 7-7 7"
-                            />
-                          </svg>
-                        )}
-                      </div>
+                      <span className="font-medium">{item.name}</span>
+                      {hasDropdown && (
+                        <svg
+                          className="w-4 h-4 text-gray-400"
+                          fill="none"
+                          stroke="currentColor"
+                          viewBox="0 0 24 24"
+                        >
+                          <path
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                            strokeWidth={2}
+                            d="M9 5l7 7-7 7"
+                          />
+                        </svg>
+                      )}
                     </motion.a>
-                  )
-                )}
+                  );
+                })}
                 
+                {/* Divider */}
+                <hr className="my-4 mx-2 border-gray-200" />
+                
+                {/* Login Button */}
                 <motion.div
                   className="px-2 pt-2"
                   initial={{ 
@@ -172,21 +212,17 @@ export const Navbar = () => {
                     opacity: 1, 
                     y: 0 
                   }}
-                  exit={{ 
-                    opacity: 0, 
-                    y: 20 
-                  }}
                   transition={{ 
                     delay: 0.2,
                     duration: 0.3
                   }}
                 >
                   <motion.button 
-                    className="w-full bg-blue-600 text-white px-4 py-3 rounded-lg hover:bg-blue-700 transition-colors duration-200 font-medium"
+                    className="w-full bg-gradient-to-r from-blue-600 to-purple-600 text-white px-4 py-3 rounded-lg hover:from-blue-700 hover:to-purple-700 transition-all duration-200 font-medium shadow-md"
                     whileTap={{ scale: 0.98 }}
-                    onClick={() => setIsMenuOpen(false)}
+                    onClick={handleLogin}
                   >
-                    Login
+                    Iniciar Sesión
                   </motion.button>
                 </motion.div>
               </div>

@@ -4,6 +4,7 @@ import java.time.LocalDateTime;
 import java.util.Map;
 import java.util.stream.Collectors;
 
+import org.springframework.graphql.data.method.annotation.GraphQlExceptionHandler;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.messaging.handler.annotation.support.MethodArgumentNotValidException;
@@ -12,6 +13,8 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
+import graphql.GraphQLError;
+import graphql.GraphqlErrorBuilder;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
@@ -88,5 +91,13 @@ public class GlobalExceptionHandler {
                 .message("Ha ocurrido un error inesperado")
                 .build();
         return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(error);
+    }
+
+    @GraphQlExceptionHandler
+    public GraphQLError handleEditorException(EditorException ex) {
+        log.error("Editor exception: {}", ex.getMessage(), ex);
+        return GraphqlErrorBuilder.newError()
+                .message("Error en el editor: " + ex.getMessage())
+                .build();
     }
 }
